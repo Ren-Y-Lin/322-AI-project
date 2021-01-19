@@ -7,7 +7,9 @@ import java.util.Map;
 import sfs2x.client.entities.Room;
 import ygraph.ai.smartfox.games.BaseGameGUI;
 import ygraph.ai.smartfox.games.GameClient;
+import ygraph.ai.smartfox.games.GameMessage;
 import ygraph.ai.smartfox.games.GamePlayer;
+import ygraph.ai.smartfox.games.amazons.AmazonsGameMessage;
 
 /**
  * An example illustrating how to implement a GamePlayer
@@ -70,6 +72,8 @@ public class COSC322Test extends GamePlayer{
     	String roomName =roomList.get(0).getName();
     	gameClient.joinRoom(roomName);
     	
+
+    	
     	System.out.println(""+roomList);
     	System.out.println("The next step is to find a room and join it: "
     			+ "the gameClient instance created in my constructor knows how!"); 
@@ -79,7 +83,8 @@ public class COSC322Test extends GamePlayer{
     public boolean handleGameMessage(String messageType, Map<String, Object> msgDetails) {
     	//This method will be called by the GameClient when it receives a game-related message
     	//from the server.
-	
+    	System.out.println(messageType);
+    	System.out.println(msgDetails.toString());
     	//For a detailed description of the message types and format, 
     	//see the method GamePlayer.handleGameMessage() in the game-client-api document. 
     	    	
