@@ -20,8 +20,8 @@ public class COSC322Test extends GamePlayer{
     private GameClient gameClient = null; 
     private BaseGameGUI gamegui = null;
 	
-    private String userName = null;
-    private String passwd = null;
+    private String userName = "Username";
+    private String passwd = "Password";
  
 	
     /**
@@ -64,6 +64,13 @@ public class COSC322Test extends GamePlayer{
     public void onLogin() {
     	System.out.println("Congratualations!!! "
     			+ "I am called because the server indicated that the login is successfully");
+    	
+    	GameClient gameClient = getGameClient();
+    	List<Room> roomList = gameClient.getRoomList();
+    	String roomName =roomList.get(0).getName();
+    	gameClient.joinRoom(roomName);
+    	
+    	System.out.println(""+roomList);
     	System.out.println("The next step is to find a room and join it: "
     			+ "the gameClient instance created in my constructor knows how!"); 
     }
