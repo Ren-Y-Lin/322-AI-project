@@ -22,5 +22,14 @@ public class MarkovTree {
 		
 	}
 	
+	
+	//takes a new position and plays till it ends while updating the tree values
+	public void playToFinish(BoardState bs) {
+		
+		
+		
+		
+	}
+	
 
 }
