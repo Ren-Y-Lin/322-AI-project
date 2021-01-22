@@ -6,7 +6,7 @@ public class BoardState {
 	BoardState head;
 	int timesWon=0;
 	int timesPlayed=0;
-	public BoardState[] nextStates = new BoardState[400];
+	public BoardState[] nextStates = new BoardState[1000];
 	
 	public BoardState(int[][] board,BoardState head) {
 		this.board=board;
