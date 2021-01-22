@@ -2,6 +2,7 @@ package ubc.cosc322;
 
 public class BoardState {
 	int[][] board;
+	int [][][]queenLocation;
 	BoardState head;
 	int timesWon=0;
 	int timesPlayed=0;

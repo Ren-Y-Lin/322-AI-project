@@ -3,11 +3,17 @@ package ubc.cosc322;
 public class MarkovTree {
 	BoardStateHead bsh = new BoardStateHead();
 	
+	
 	public MarkovTree() {
 		
 		
 		
 		
+		
+	}
+	
+	//Next iteration of training
+	public void nextIteration() {
 		
 	}
 	
@@ -24,10 +30,10 @@ public class MarkovTree {
 	
 	
 	//takes a new position and plays till it ends while updating the tree values
-	public void playToFinish(BoardState bs) {
+	public boolean playToFinish(BoardState bs) {
 		
 		
-		
+		return true;
 		
 	}
 	
