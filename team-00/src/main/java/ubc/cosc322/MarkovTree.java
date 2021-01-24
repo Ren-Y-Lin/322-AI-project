@@ -18,24 +18,6 @@ public class MarkovTree {
 	}
 	
 	
-	
-	public Move getBestMove() {
-		MoveGenerator mg = new MoveGenerator(); 
-		int [][][] possibleStates = mg.getMoves(null, 0);
-		
-		return null;
-		
-		
-	}
-	
-	
-	//takes a new position and plays till it ends while updating the tree values
-	public boolean playToFinish(BoardState bs) {
-		
-		
-		return true;
-		
-	}
-	
+
 
 }

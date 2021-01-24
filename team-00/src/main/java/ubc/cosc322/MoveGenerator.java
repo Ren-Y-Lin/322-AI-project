@@ -15,7 +15,7 @@ public class MoveGenerator {
 	}
 	
 	//Returns an array containing all the reachable board states
-	public int[][][] getMoves(int[][] currentBoard, int player){
+	public static BoardState[] getMoves(int[][] currentBoard, int player){
 		
 		
 		
