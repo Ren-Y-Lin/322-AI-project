@@ -6,7 +6,7 @@ public class BoardStateHead extends BoardState{
 	//Generates the Head of the markov tree
 	public BoardStateHead() {
 		
-		super(null,null,initQueenPos1,initQueenPos2,1,null,null);
+		super(null,initQueenPos1,initQueenPos2,1,null,null);
 		int[][] tboard = {{0,0,0,2,0,0,2,0,0,0},{0,0,0,0,0,0,0,0,0,0},{2,0,0,0,0,0,0,0,0,2},
 				{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},
 				{1,0,0,0,0,0,0,0,0,1},{0,0,0,0,0,0,0,0,0,0},{0,0,0,1,0,0,1,0,0,0}};

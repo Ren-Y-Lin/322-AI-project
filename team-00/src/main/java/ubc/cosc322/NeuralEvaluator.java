@@ -8,7 +8,7 @@ public class NeuralEvaluator {
 		
 	} 
 	
-	public double evaluateBoard(int[][] BoardState) {
+	public static double evaluateBoard(int[][] BoardState) {
 		
 		return 0;
 		
