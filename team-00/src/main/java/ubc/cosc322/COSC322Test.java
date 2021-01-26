@@ -1,6 +1,7 @@
 
 package ubc.cosc322;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ import ygraph.ai.smartfox.games.amazons.AmazonsGameMessage;
 public class COSC322Test extends GamePlayer{
 
     private GameClient gameClient = null; 
-    private BaseGameGUI gamegui = new BaseGameGUI(this);
+    private BaseGameGUI gamegui = null;
 	
     private String userName = "Username";
     private String passwd = "Password";
@@ -57,7 +58,7 @@ public class COSC322Test extends GamePlayer{
     	
     	//To make a GUI-based player, create an instance of BaseGameGUI
     	//and implement the method getGameGUI() accordingly
-    	//this.gamegui = new BaseGameGUI(this);
+    	this.gamegui = new BaseGameGUI(this);
     }
  
 
@@ -103,8 +104,19 @@ public class COSC322Test extends GamePlayer{
     public boolean handleGameMessage(String messageType, Map<String, Object> msgDetails) {
     	//This method will be called by the GameClient when it receives a game-related message
     	//from the server.
-    	System.out.println(messageType);
-    	System.out.println(msgDetails.toString());
+    	//System.out.println("yomies   "+messageType+ "  "+ GameMessage.GAME_STATE_BOARD);
+    	//System.out.println(msgDetails.toString());
+    	
+    	if(messageType.equals(GameMessage.GAME_STATE_BOARD)) {
+    		ArrayList<Integer> gs = (ArrayList<Integer>) msgDetails.get("game-state");
+    		System.out.println("homies" + gs.toString());
+    		gamegui.setGameState(gs);
+    	}
+    	
+    	if(messageType.equals(GameMessage.GAME_ACTION_MOVE)) {
+
+    		gamegui.updateGameState(msgDetails);
+    	}
     	
     	
     	//For a detailed description of the message types and format, 
