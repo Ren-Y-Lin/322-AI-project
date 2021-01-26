@@ -20,7 +20,7 @@ import ygraph.ai.smartfox.games.amazons.AmazonsGameMessage;
 public class COSC322Test extends GamePlayer{
 
     private GameClient gameClient = null; 
-    private BaseGameGUI gamegui = null;
+    private BaseGameGUI gamegui = new BaseGameGUI(this);
 	
     private String userName = "Username";
     private String passwd = "Password";
@@ -64,19 +64,39 @@ public class COSC322Test extends GamePlayer{
 
     @Override
     public void onLogin() {
-    	System.out.println("Congratualations!!! "
+    	
+    	
+    	userName = gameClient.getUserName();
+    	if(gamegui != null) {
+    		gamegui.setRoomInformation(gameClient.getRoomList());
+    	}
+    	
+    	/*System.out.println("Congratualations!!! "
     			+ "I am called because the server indicated that the login is successfully");
     	
-    	GameClient gameClient = getGameClient();
+    	
     	List<Room> roomList = gameClient.getRoomList();
     	String roomName =roomList.get(0).getName();
-    	gameClient.joinRoom(roomName);
+    	
     	
 
     	
     	System.out.println(""+roomList);
     	System.out.println("The next step is to find a room and join it: "
-    			+ "the gameClient instance created in my constructor knows how!"); 
+    			+ "the gameClient instance created in my constructor knows how!");
+    	
+    	GameClient gameClient = getGameClient();
+    	if(gamegui != null) {
+    		gamegui.setRoomInformation(gameClient.getRoomList());
+    	}
+    	
+    	GameClient gameClient = getGameClient();
+    	userName = gameClient.getUserName();
+    	if(gamegui != null) {
+    		gamegui.setRoomInformation(gameClient.getRoomList());
+    	}*/
+    	
+
     }
 
     @Override
@@ -85,6 +105,8 @@ public class COSC322Test extends GamePlayer{
     	//from the server.
     	System.out.println(messageType);
     	System.out.println(msgDetails.toString());
+    	
+    	
     	//For a detailed description of the message types and format, 
     	//see the method GamePlayer.handleGameMessage() in the game-client-api document. 
     	    	
@@ -106,7 +128,7 @@ public class COSC322Test extends GamePlayer{
 	@Override
 	public BaseGameGUI getGameGUI() {
 		// TODO Auto-generated method stub
-		return  null;
+		return  this.gamegui;
 	}
 
 	@Override
