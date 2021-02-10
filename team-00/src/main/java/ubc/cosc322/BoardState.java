@@ -46,7 +46,7 @@ public class BoardState {
 	//If none found, generates all of them and backpropagates instead
 	BoardState[] getNextStates() {
 		if(nextStates == null) {
-			nextStates = MoveGenerator.getMoves(board,turn);
+			nextStates = MoveGenerator.getMoves(this);
 			int won = 0;
 			int play=0;
 			for (int i = 0; i<nextStates.length;i++) {
@@ -89,5 +89,11 @@ public class BoardState {
 		return evaluation;
 		
 		
+	}
+	//TODO
+	//The null below is caused by the lastState in the constructor. idk what the intent is but I left it null for now. -Winter
+	public BoardState copy() {
+		BoardState copy = new BoardState(board,queenPos1,queenPos2,turn,null,lastMove);
+		return copy;
 	}
 }
