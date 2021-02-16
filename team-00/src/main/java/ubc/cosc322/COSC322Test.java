@@ -109,7 +109,7 @@ public class COSC322Test extends GamePlayer{
     	
     	if(messageType.equals(GameMessage.GAME_STATE_BOARD)) {
     		ArrayList<Integer> gs = (ArrayList<Integer>) msgDetails.get("game-state");
-    		System.out.println("homies" + gs.toString());
+    		System.out.println("homies" + msgDetails.get("game-state"));
     		gamegui.setGameState(gs);
     	}
     	

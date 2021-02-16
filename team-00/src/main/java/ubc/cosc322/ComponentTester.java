@@ -33,12 +33,15 @@ public class ComponentTester {
 			
 			
 		} catch (IOException e) {
+			
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidKerasConfigurationException e) {
+			
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedKerasConfigurationException e) {
+			
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

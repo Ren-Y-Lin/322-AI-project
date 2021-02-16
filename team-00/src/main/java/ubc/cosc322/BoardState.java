@@ -39,6 +39,7 @@ public class BoardState {
 		this.queenPos2=QueenPos2;
 		this.turn=turn;
 		this.lastMove=lastMove;
+		this.lastState = lastState;
 		
 	}
 	
@@ -93,7 +94,7 @@ public class BoardState {
 	//TODO
 	//The null below is caused by the lastState in the constructor. idk what the intent is but I left it null for now. -Winter
 	public BoardState copy() {
-		BoardState copy = new BoardState(board,queenPos1,queenPos2,turn,null,lastMove);
+		BoardState copy = new BoardState(board,queenPos1,queenPos2,turn,lastState,lastMove);
 		return copy;
 	}
 }

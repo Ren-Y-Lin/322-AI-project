@@ -6,7 +6,7 @@ public class Simulator {
 	
 	
 	
-	public static int playTillEnd(BoardState bs) {
+	public static int playTillEnd(BoardState bs, int turn) {
 		
 		
 		
