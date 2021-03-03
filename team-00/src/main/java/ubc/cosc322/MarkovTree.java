@@ -18,9 +18,13 @@ public class MarkovTree {
 		
 	}
 	
-	//Next iteration of training
-	public void nextIteration() {
-		
+	//train tree
+	public void train(int iterations) {
+		for (int i = 0; i< iterations; i++) {
+			
+			
+			
+		}
 	}
 	
 	
