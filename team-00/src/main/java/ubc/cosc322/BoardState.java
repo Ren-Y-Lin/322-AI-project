@@ -2,7 +2,7 @@ package ubc.cosc322;
 
 import java.util.ArrayList;
 
-public class BoardState {
+public class BoardState implements java.io.Serializable{
 	
 	//evaluation
 	double evaluation = -1;
