@@ -33,7 +33,7 @@ public class BoardState implements java.io.Serializable{
 	//Tracks whose turn it is
 	int turn;
 	
-	//Constructor
+	//Constructors
 	public BoardState(int[][] board, ArrayList<int[]> QueenPos1, ArrayList<int[]> QueenPos2,int turn,BoardState lastState, Move lastMove) {
 		this.board=board;
 		

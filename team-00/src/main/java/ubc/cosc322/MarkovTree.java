@@ -48,6 +48,8 @@ public class MarkovTree {
 		
 	}
 	
+	
+	//Load trees
 	public void loadTree(String fileName) {
 		
 		try {
