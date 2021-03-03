@@ -18,6 +18,17 @@ public class MarkovTree {
 	}
 	
 	
+	
+	//Save trained tree to file
+	public void saveTree() {
+		
+		
+		
+		
+		
+	}
+	
+	
 
 
 }
