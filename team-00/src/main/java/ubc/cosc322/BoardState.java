@@ -1,5 +1,7 @@
 package ubc.cosc322;
 
+import java.util.ArrayList;
+
 public class BoardState {
 	
 	//evaluation
@@ -9,8 +11,8 @@ public class BoardState {
 	int[][] board;
 	
 	//queen position for the two colors
-	int[][] queenPos1;
-	int[][] queenPos2;
+	public ArrayList<int[]>queenPos1;
+	public ArrayList<int[]>queenPos2;
 	
 	
 	//tracks last move
@@ -24,7 +26,7 @@ public class BoardState {
 	int timesPlayed=0;
 	
 	//Tracks possible next moves
-	public BoardState[] nextStates = new BoardState[1000];
+	public ArrayList<BoardState> nextStates;
 	//Tracks last board state
 	public BoardState lastState;
 	
@@ -32,7 +34,7 @@ public class BoardState {
 	int turn;
 	
 	//Constructor
-	public BoardState(int[][] board, int[][] QueenPos1, int[][] QueenPos2,int turn,BoardState lastState, Move lastMove) {
+	public BoardState(int[][] board, ArrayList<int[]> QueenPos1, ArrayList<int[]> QueenPos2,int turn,BoardState lastState, Move lastMove) {
 		this.board=board;
 		
 		this.queenPos1=QueenPos1;
@@ -43,26 +45,39 @@ public class BoardState {
 		
 	}
 	
+	public BoardState(int[][] board, int turn,BoardState lastState, Move lastMove) {
+		this.board=board;
+
+		this.turn=turn;
+		this.lastMove=lastMove;
+		this.lastState = lastState;
+		
+	}
+	
 	//Returns all possible board variation
 	//If none found, generates all of them and backpropagates instead
-	BoardState[] getNextStates() {
+	ArrayList<BoardState> getNextStates() {
 		if(nextStates == null) {
 			nextStates = MoveGenerator.getMoves(this);
 			int won = 0;
 			int play=0;
-			for (int i = 0; i<nextStates.length;i++) {
-				if(nextStates[i]==null) {
-					break;
-				}else {
-					play++;
-					if(nextStates[i].timesWon==1) {
-						won++;
-					}
-				}
+			if(nextStates!=null) {
 				
+			}else {
+				nextStates = new ArrayList<BoardState>();
+					for (BoardState i: nextStates) {
+						
+						play++;
+						if(i.timesWon==1) {
+							won++;
+						}
+							
+							
+				}
 			}
+			
 			backpropagate(won,play);
-			return null;
+			return nextStates;
 		}else {
 			return nextStates;
 		}

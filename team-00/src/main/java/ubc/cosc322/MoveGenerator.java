@@ -1,5 +1,7 @@
 package ubc.cosc322;
 
+import java.util.ArrayList;
+
 public class MoveGenerator {
 	
 	
@@ -16,7 +18,7 @@ public class MoveGenerator {
 	
 	//Returns an array containing all the reachable board states
 	//generates board state and checks if each move wins but doesnt evaluate board state
-	public static BoardState[] getMoves(BoardState inputBoard){
+	public static ArrayList<BoardState> getMoves(BoardState inputBoard){
 		//Generate Queen Moves
 		int[][] customBoard = copyBoard(inputBoard.board);
 		
@@ -25,24 +27,47 @@ public class MoveGenerator {
 		//Queens have 8 directions so calculating all 8 directions for 4 queens
 		
 		//validMoves: 0=invalid, 1=valid, first array is which queen
-		int[][][] validMoves = new int[4][inputBoard.board.length][inputBoard.board[0].length];
+
+		ArrayList<int[][]> validMovesQBoardStates = new ArrayList<int[][]>();
+		ArrayList<int[]> queenPositions = new ArrayList<int[]>();
 		
-		int[][] currentQueenPos = ((inputBoard.turn == 1) ? inputBoard.queenPos1 : inputBoard.queenPos2);
+
 		
-		int[] validMovesCounter = new int[4];
+		ArrayList<BoardState> validMovesBoardStates = new ArrayList<BoardState>();
+		
+		ArrayList<int[]> currentQueenPos = ((inputBoard.turn == 1) ? inputBoard.queenPos1 : inputBoard.queenPos2);
+		
+
 		
 		//Calculating All Queen Moves
 		//direction: 0-7 
 		for(int queen = 0; queen < 4; queen++) {
-			int queenX = currentQueenPos[queen][0];
-			int queenY = currentQueenPos[queen][1];
+			//get queen that needs change's location
+			int queenX = currentQueenPos.get(queen)[0];
+			int queenY = currentQueenPos.get(queen)[1];
+			
+			//clone the current board and remove the queen that is moving
+			int[][] defaultBoard = customBoard.clone();
+			defaultBoard[queenX][queenY] = 0;
 			//N
 			for(int distance = 1; distance < 10; distance++) {
 				int checkX = queenX - distance;
 				int checkY = queenY;
-				if(checkValid(customBoard,checkX,checkY)) {
-					validMoves[queen][checkX][checkY] = 1;
-					validMovesCounter[queen]++;
+				//verify if new location works
+				if(checkValid(defaultBoard,checkX,checkY)) {
+
+					//create new board with valid new queen locations
+					int[][] newBoard = defaultBoard.clone();
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
+					validMovesQBoardStates.add(newBoard);
+					
+					for(int i =0; i< 4; i++) {
+						if(i!= queen) {
+							queenPositions.add(currentQueenPos.get(i));
+						}
+					}
+					queenPositions.add(new int[] {checkX,checkY});
+
 				}
 				else break;
 			}
@@ -51,8 +76,19 @@ public class MoveGenerator {
 				int checkX = queenX - distance;
 				int checkY = queenY + distance;
 				if(checkValid(customBoard,checkX,checkY)) {
-					validMoves[queen][checkX][checkY] = 1;
-					validMovesCounter[queen]++;
+
+					
+					int[][] newBoard = defaultBoard.clone();
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
+					validMovesQBoardStates.add(newBoard);
+					
+					for(int i =0; i< 4; i++) {
+						if(i!= queen) {
+							queenPositions.add(currentQueenPos.get(i));
+						}
+					}
+					queenPositions.add(new int[] {checkX,checkY});
+
 				}
 				else break;
 			}
@@ -61,8 +97,19 @@ public class MoveGenerator {
 				int checkX = queenX;
 				int checkY = queenY + distance;
 				if(checkValid(customBoard,checkX,checkY)) {
-					validMoves[queen][checkX][checkY] = 1;
-					validMovesCounter[queen]++;
+
+					
+					int[][] newBoard = defaultBoard.clone();
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
+					validMovesQBoardStates.add(newBoard);
+					
+					for(int i =0; i< 4; i++) {
+						if(i!= queen) {
+							queenPositions.add(currentQueenPos.get(i));
+						}
+					}
+					queenPositions.add(new int[] {checkX,checkY});
+
 				}
 				else break;
 			}
@@ -71,8 +118,19 @@ public class MoveGenerator {
 				int checkX = queenX + distance;
 				int checkY = queenY + distance;
 				if(checkValid(customBoard,checkX,checkY)) {
-					validMoves[queen][checkX][checkY] = 1;
-					validMovesCounter[queen]++;
+
+					
+					int[][] newBoard = defaultBoard.clone();
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
+					validMovesQBoardStates.add(newBoard);
+					
+					for(int i =0; i< 4; i++) {
+						if(i!= queen) {
+							queenPositions.add(currentQueenPos.get(i));
+						}
+					}
+					queenPositions.add(new int[] {checkX,checkY});
+
 				}
 				else break;
 			}
@@ -81,8 +139,19 @@ public class MoveGenerator {
 				int checkX = queenX + distance;
 				int checkY = queenY;
 				if(checkValid(customBoard,checkX,checkY)) {
-					validMoves[queen][checkX][checkY] = 1;
-					validMovesCounter[queen]++;
+
+					
+					int[][] newBoard = defaultBoard.clone();
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
+					validMovesQBoardStates.add(newBoard);
+					
+					for(int i =0; i< 4; i++) {
+						if(i!= queen) {
+							queenPositions.add(currentQueenPos.get(i));
+						}
+					}
+					queenPositions.add(new int[] {checkX,checkY});
+
 				}
 				else break;
 			}
@@ -91,8 +160,19 @@ public class MoveGenerator {
 				int checkX = queenX + distance;
 				int checkY = queenY - distance;
 				if(checkValid(customBoard,checkX,checkY)) {
-					validMoves[queen][checkX][checkY] = 1;
-					validMovesCounter[queen]++;
+
+					
+					int[][] newBoard = defaultBoard.clone();
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
+					validMovesQBoardStates.add(newBoard);
+					
+					for(int i =0; i< 4; i++) {
+						if(i!= queen) {
+							queenPositions.add(currentQueenPos.get(i));
+						}
+					}
+					queenPositions.add(new int[] {checkX,checkY});
+
 				}
 				else break;
 			}
@@ -101,8 +181,19 @@ public class MoveGenerator {
 				int checkX = queenX;
 				int checkY = queenY - distance;
 				if(checkValid(customBoard,checkX,checkY)) {
-					validMoves[queen][checkX][checkY] = 1;
-					validMovesCounter[queen]++;
+
+					
+					int[][] newBoard = defaultBoard.clone();
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
+					validMovesQBoardStates.add(newBoard);
+					
+					for(int i =0; i< 4; i++) {
+						if(i!= queen) {
+							queenPositions.add(currentQueenPos.get(i));
+						}
+					}
+					queenPositions.add(new int[] {checkX,checkY});
+
 				}
 				else break;
 			}
@@ -111,149 +202,70 @@ public class MoveGenerator {
 				int checkX = queenX - distance;
 				int checkY = queenY - distance;
 				if(checkValid(customBoard,checkX,checkY)) {
-					validMoves[queen][checkX][checkY] = 1;
-					validMovesCounter[queen]++;
+
+					
+					int[][] newBoard = defaultBoard.clone();
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
+					validMovesQBoardStates.add(newBoard);
+					
+					for(int i =0; i< 4; i++) {
+						if(i!= queen) {
+							queenPositions.add(currentQueenPos.get(i));
+						}
+					}
+					queenPositions.add(new int[] {checkX,checkY});
+
 				}
 				else break;
 			}
 		}
 		
-		//Generate Fires/Arrows
+
 		
-		//validFires: [Queen][Queen Position Number][ValidFiresX][ValidFiresY]
-		int[][][][] validFires = new int[4][][][];
-		for(int i = 0; i < 4; i++) {
-			validFires[i] = new int[validMovesCounter[i]][inputBoard.board.length][inputBoard.board[0].length];
-		}
-		
-		for(int queen = 0; queen<4; queen++) {
-			int queenX = currentQueenPos[queen][0];
-			int queenY = currentQueenPos[queen][1];
-			
-			int queenMovesTotal = validFires[queen].length;
-			
-			for(int fire = 0; fire<queenMovesTotal; fire++) {
-				int[][] currentQueenStateBoard = copyBoard(customBoard);
-				
-				int currentQueenX=0,currentQueenY=0;
-				
-				//Finding Current Queen Move
-				boolean toBreak = false;
-				int toBreakCounter = 0;
-				for(int i = 0; i < currentQueenStateBoard.length; i++) {
-					for(int j = 0; j < currentQueenStateBoard[0].length; j++) {
-						if(validMoves[queen][i][j] == 1) {
-							currentQueenX = i;
-							currentQueenY = j;
-							toBreakCounter++;
-							if(toBreakCounter==fire+1) {
-								toBreak = true;
-								break;
-							}
-						}
-					}
-					if(toBreak)
-						break;
-				}
-				
-				//Move the Queen
-				currentQueenStateBoard[queenX][queenY] = 0;
-				currentQueenStateBoard[currentQueenX][currentQueenY] = (inputBoard.turn==1) ? 1 : 2;
-				
-				//Calculating All Fires
-				
-				//N
-				for(int distance = 1; distance < 10; distance++) {
-					int checkX = currentQueenX - distance;
-					int checkY = currentQueenY;
-					if(checkValid(currentQueenStateBoard,checkX,checkY)) {
-						validFires[queen][fire][checkX][checkY] = 1;
-					}
-					else break;
-				}
-				//NE
-				for(int distance = 1; distance < 10; distance++) {
-					int checkX = currentQueenX - distance;
-					int checkY = currentQueenY + distance;
-					if(checkValid(currentQueenStateBoard,checkX,checkY)) {
-						validFires[queen][fire][checkX][checkY] = 1;
-					}
-					else break;
-				}
-				//E
-				for(int distance = 1; distance < 10; distance++) {
-					int checkX = currentQueenX;
-					int checkY = currentQueenY + distance;
-					if(checkValid(currentQueenStateBoard,checkX,checkY)) {
-						validFires[queen][fire][checkX][checkY] = 1;
-					}
-					else break;
-				}
-				//SE
-				for(int distance = 1; distance < 10; distance++) {
-					int checkX = currentQueenX + distance;
-					int checkY = currentQueenY + distance;
-					if(checkValid(currentQueenStateBoard,checkX,checkY)) {
-						validFires[queen][fire][checkX][checkY] = 1;
-					}
-					else break;
-				}
-				//S
-				for(int distance = 1; distance < 10; distance++) {
-					int checkX = currentQueenX + distance;
-					int checkY = currentQueenY;
-					if(checkValid(currentQueenStateBoard,checkX,checkY)) {
-						validFires[queen][fire][checkX][checkY] = 1;
-					}
-					else break;
-				}
-				//SW
-				for(int distance = 1; distance < 10; distance++) {
-					int checkX = currentQueenX + distance;
-					int checkY = currentQueenY - distance;
-					if(checkValid(currentQueenStateBoard,checkX,checkY)) {
-						validFires[queen][fire][checkX][checkY] = 1;
-					}
-					else break;
-				}
-				//W
-				for(int distance = 1; distance < 10; distance++) {
-					int checkX = currentQueenX;
-					int checkY = currentQueenY - distance;
-					if(checkValid(currentQueenStateBoard,checkX,checkY)) {
-						validFires[queen][fire][checkX][checkY] = 1;
-					}
-					else break;
-				}
-				//NW
-				for(int distance = 1; distance < 10; distance++) {
-					int checkX = currentQueenX - distance;
-					int checkY = currentQueenY - distance;
-					if(checkValid(currentQueenStateBoard,checkX,checkY)) {
-						validFires[queen][fire][checkX][checkY] = 1;
-					}
-					else break;
-				}
-			}
-		}
 		
 		//TODO
 		//Make new BoardStates:
 		
+		for (int i = 0; i < validMovesQBoardStates.size();i++) {
+			int[][] evalState = validMovesQBoardStates.get(i).clone();
+			int[] queenLocation = queenPositions.get(i*4);
+			int[] queenLocation2 = queenPositions.get(i*4+1);
+			int[] queenLocation3 = queenPositions.get(i*4+2);
+			int[] queenLocation4 = queenPositions.get(i*4+3);
+			
+			ArrayList<int[]> tempQueens = new ArrayList<int[]>();
+			tempQueens.add(queenLocation);
+			tempQueens.add(queenLocation2);
+			tempQueens.add(queenLocation3);
+			tempQueens.add(queenLocation4);
+			
+			if(inputBoard.turn==1) {
+				BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, i, inputBoard.lastState, null);
+				validMovesBoardStates.add(newBoard);
+			}else {
+				BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, i, inputBoard.lastState, null);
+				validMovesBoardStates.add(newBoard);
+			}
+
+			
+			
+			
+		}
+		
 		
 		
 		//For debugging:
-		for(int i = 0;i<4;i++) {
-			System.out.print("Queen" + (i+1) + " ");
-			printBoard(validMoves[i]);
-			
-			System.out.println("Fire Locations for each move");
-			for (int[][] validFiresBoard : validFires[i]) {
-				System.out.print("Fire ");
-				printBoard(validFiresBoard);
-			}
-		}
-		return null;
+//		for(int i = 0;i<4;i++) {
+//			System.out.print("Queen" + (i+1) + " ");
+//			printBoard(validMoves[i]);
+//			
+//			System.out.println("Fire Locations for each move");
+//			for (int[][] validFiresBoard : validFires[i]) {
+//				System.out.print("Fire ");
+//				printBoard(validFiresBoard);
+//			}
+//		}
+		return validMovesBoardStates;
 	}
 	
 	//Takes the board and returns whether the location is valid (valid if 0). Returns false otherwise

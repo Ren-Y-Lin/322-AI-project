@@ -1,12 +1,21 @@
 package ubc.cosc322;
 
+import java.util.ArrayList;
+
 public class BoardStateHead extends BoardState{
-	static int[][] initQueenPos2 = {{0,3},{0,6},{2,0},{2,9}};
-	static int[][] initQueenPos1 = {{9,3},{9,6},{7,0},{7,9}};
+
 	//Generates the Head of the markov tree
 	public BoardStateHead() {
-		
-		super(null,initQueenPos1,initQueenPos2,1,null,null);
+	
+		super(null,1,null,null);
+		this.queenPos1.add(new int[]{0,3});
+		this.queenPos1.add(new int[]{0,6});
+		this.queenPos1.add(new int[]{2,0});
+		this.queenPos1.add(new int[]{2,9});
+		this.queenPos2.add(new int[]{9,3});
+		this.queenPos2.add(new int[]{9,6});
+		this.queenPos2.add(new int[]{7,0});
+		this.queenPos2.add(new int[]{7,9});
 		int[][] tboard = {{0,0,0,2,0,0,2,0,0,0},{0,0,0,0,0,0,0,0,0,0},{2,0,0,0,0,0,0,0,0,2},
 				{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},
 				{1,0,0,0,0,0,0,0,0,1},{0,0,0,0,0,0,0,0,0,0},{0,0,0,1,0,0,1,0,0,0}};
