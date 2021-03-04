@@ -112,4 +112,11 @@ public class BoardState implements java.io.Serializable{
 		BoardState copy = new BoardState(board,queenPos1,queenPos2,turn,lastState,lastMove);
 		return copy;
 	}
+	
+	public boolean isLastMoveEqual(int[] lastMoves) {
+		
+		
+		
+		return true;
+	}
 }
