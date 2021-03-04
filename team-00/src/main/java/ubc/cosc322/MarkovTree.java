@@ -5,10 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 public class MarkovTree {
 	BoardStateHead bsh = new BoardStateHead();
-	
+	BoardState currentBoard = bsh;
 	
 	public MarkovTree() {
 		
@@ -68,6 +69,28 @@ public class MarkovTree {
 	      }
 		
 		
+	}
+	
+	public void updateBoard(int[] move) throws InvalidMoveException {
+		ArrayList<BoardState> nextStates = currentBoard.getNextStates();
+		
+		if(nextStates == null || nextStates.size()==0) {
+			throw new InvalidMoveException("No valid move left: Loss");
+		}
+		boolean moveExist = false;
+		
+		for(BoardState bs: nextStates) {
+			if (bs.isLastMoveEqual(move)) {
+				currentBoard = bs;
+				moveExist= true;
+
+			}
+		}
+		if(!moveExist) {
+			throw new InvalidMoveException("No Valid Next Move");
+		}
+		
+
 	}
 	
 	
