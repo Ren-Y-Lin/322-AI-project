@@ -61,22 +61,20 @@ public class BoardState implements java.io.Serializable {
 			nextStates = MoveGenerator.getMoves(this);
 			int won = 0;
 			int play = 0;
-			if (nextStates != null) {
 
-			} else {
-				nextStates = new ArrayList<BoardState>();
-				for (BoardState i : nextStates) {
+				
+			for (BoardState i : nextStates) {
 
-					play++;
-					if (i.timesWon == 1) {
-						won++;
-					}
-
-				}
+				Simulator.playTillEnd(i);
+				won+=i.timesWon;
+				play++;
 			}
+
 
 			backpropagate(won, play);
 			return nextStates;
+			
+			
 		} else {
 			return nextStates;
 		}
