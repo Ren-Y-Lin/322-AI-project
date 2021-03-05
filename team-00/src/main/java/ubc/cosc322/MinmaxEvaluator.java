@@ -8,13 +8,18 @@ public class MinmaxEvaluator {
 	
 	
 	//input: state of the board, the amount of moves to look into the future, whose turn it is
-	public static double evaluateBoard(BoardState b, int searchDept, int turn) {
+	public static double evaluateBoard(BoardState b, int searchDepth) {
 		
-		if(turn == 0) {
+		if(searchDepth == 0 ) {
 			return BoardStateEvaluator.evaluateBoard(b);
 		}
 		
+		//might be empty array, might be null
 		ArrayList<BoardState> nextMove = MoveGenerator.getMoves(b);
+		
+		if(nextMove==null || nextMove.size()<1) {
+			return BoardStateEvaluator.evaluateBoard(b);
+		}
 		
 		double maxVal = BoardStateEvaluator.evaluateBoard(b);
 		double minVal = BoardStateEvaluator.evaluateBoard(b);
@@ -24,7 +29,7 @@ public class MinmaxEvaluator {
 		int minPos;
 		
 		for (int i = 0; i< nextMove.size();i++) {
-			double temp = evaluateBoard(b,searchDept-1,turn*-1);
+			double temp = evaluateBoard(b,searchDepth-1);
 			
 			if(temp>maxVal) {
 				maxVal = temp;
@@ -41,7 +46,7 @@ public class MinmaxEvaluator {
 		
 		
 		
-		return turn == 1?maxVal:minVal;
+		return b.turn == 1?maxVal:minVal;
 		
 		
 	}

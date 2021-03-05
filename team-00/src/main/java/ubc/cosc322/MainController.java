@@ -15,7 +15,7 @@ public class MainController {
 		boolean loaded = false;
 		
 		while (true) {
-			System.out.println("1 = train, 2 = save, 3 = load, 4 = play vs human, 5 = play vs pc");
+			System.out.println("1 = train, 2 = save, 3 = load, 5 = play vs pc");
 			System.out.println("Input command:");
 			Scanner sc = new Scanner(System.in);
 			
@@ -40,8 +40,7 @@ public class MainController {
 				mt.saveTree(input);
 				break;
 			
-			case 4: 
-				break;
+
 			
 			case 5: 
 				break;
