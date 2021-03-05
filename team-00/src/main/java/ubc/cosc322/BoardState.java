@@ -10,11 +10,10 @@ public class BoardState implements java.io.Serializable {
 	// board state
 	int[][] board;
 
-	// queen position for the two colors
-	public ArrayList<int[]> queenPos1;
-	public ArrayList<int[]> queenPos2;
-
-	// tracks last move
+	
+	//queen position for the two colors
+	public ArrayList<int[]>queenPos1 = new ArrayList<int[]>();
+	public ArrayList<int[]>queenPos2 = new ArrayList<int[]>();
 	Move lastMove;
 
 	// weight for the markov tree selection algorithm
