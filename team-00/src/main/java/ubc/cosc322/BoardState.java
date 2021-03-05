@@ -11,8 +11,8 @@ public class BoardState implements java.io.Serializable{
 	int[][] board;
 	
 	//queen position for the two colors
-	public ArrayList<int[]>queenPos1;
-	public ArrayList<int[]>queenPos2;
+	public ArrayList<int[]>queenPos1 = new ArrayList<int[]>();
+	public ArrayList<int[]>queenPos2 = new ArrayList<int[]>();
 	
 	
 	//tracks last move
