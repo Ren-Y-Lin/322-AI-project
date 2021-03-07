@@ -259,7 +259,7 @@ public class MoveGenerator {
 				//UP
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0],queenLocation4[1]+j)) {
-						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0],queenLocation4[1]+j));
+						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0],queenLocation4[1]+j));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -269,7 +269,7 @@ public class MoveGenerator {
 				//Down
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0],queenLocation4[1]-j)) {
-						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0],queenLocation4[1]-j));
+						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0],queenLocation4[1]-j));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -279,7 +279,7 @@ public class MoveGenerator {
 				//UP Right
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0]+j,queenLocation4[1]+j)) {
-						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]+j,queenLocation4[1]+j));
+						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]+j,queenLocation4[1]+j));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -289,7 +289,7 @@ public class MoveGenerator {
 				//Down Left
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0]-j,queenLocation4[1]-j)) {
-						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]-j,queenLocation4[1]-j));
+						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]-j,queenLocation4[1]-j));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -299,7 +299,7 @@ public class MoveGenerator {
 				//Right
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0]+j,queenLocation4[1])) {
-						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]+j,queenLocation4[1]));
+						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]+j,queenLocation4[1]));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -309,7 +309,7 @@ public class MoveGenerator {
 				//Left
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0]-j,queenLocation4[1])) {
-						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]-j,queenLocation4[1]));
+						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]-j,queenLocation4[1]));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -319,7 +319,7 @@ public class MoveGenerator {
 				//UP Left
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0]-j,queenLocation4[1]+j)) {
-						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]-j,queenLocation4[1]+j));
+						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]-j,queenLocation4[1]+j));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -329,7 +329,7 @@ public class MoveGenerator {
 				//Down Right
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0]+j,queenLocation4[1]-j)) {
-						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]+j,queenLocation4[1]-j));
+						BoardState newBoard = new BoardState(evalState, tempQueens, inputBoard.queenPos2, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]+j,queenLocation4[1]-j));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -341,7 +341,7 @@ public class MoveGenerator {
 				//UP
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0],queenLocation4[1]+j)) {
-						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0],queenLocation4[1]+j));
+						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0],queenLocation4[1]+j));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -351,7 +351,7 @@ public class MoveGenerator {
 				//Down
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0],queenLocation4[1]-j)) {
-						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0],queenLocation4[1]-j));
+						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0],queenLocation4[1]-j));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -361,7 +361,7 @@ public class MoveGenerator {
 				//UP Right
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0]+j,queenLocation4[1]+j)) {
-						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]+j,queenLocation4[1]+j));
+						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]+j,queenLocation4[1]+j));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -371,7 +371,7 @@ public class MoveGenerator {
 				//Down Left
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0]-j,queenLocation4[1]-j)) {
-						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]-j,queenLocation4[1]-j));
+						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]-j,queenLocation4[1]-j));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -381,7 +381,7 @@ public class MoveGenerator {
 				//Right
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0]+j,queenLocation4[1])) {
-						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]+j,queenLocation4[1]));
+						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]+j,queenLocation4[1]));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -391,7 +391,7 @@ public class MoveGenerator {
 				//Left
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0]-j,queenLocation4[1])) {
-						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]-j,queenLocation4[1]));
+						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]-j,queenLocation4[1]));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -401,7 +401,7 @@ public class MoveGenerator {
 				//UP Left
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0]-j,queenLocation4[1]+j)) {
-						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]-j,queenLocation4[1]+j));
+						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]-j,queenLocation4[1]+j));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;
@@ -411,7 +411,7 @@ public class MoveGenerator {
 				//Down Right
 				for(int j = 1; j<9; j++) {
 					if(checkValid(evalState,queenLocation4[0]+j,queenLocation4[1]-j)) {
-						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, i, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]+j,queenLocation4[1]-j));
+						BoardState newBoard = new BoardState(evalState, inputBoard.queenPos1, tempQueens, inputBoard.turn*-1, inputBoard.lastState, new Move(lastQueenLoc[0],lastQueenLoc[1],queenLocation4[0],queenLocation4[1],queenLocation4[0]+j,queenLocation4[1]-j));
 						validMovesBoardStates.add(newBoard);
 					}else {
 						break;

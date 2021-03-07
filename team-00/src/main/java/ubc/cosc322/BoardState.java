@@ -63,7 +63,7 @@ public class BoardState implements java.io.Serializable {
 
 				
 			for (BoardState i : nextStates) {
-
+				
 				Simulator.playTillEnd(i);
 				won+=i.timesWon;
 				play++;
