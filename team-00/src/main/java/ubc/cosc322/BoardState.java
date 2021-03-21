@@ -111,10 +111,10 @@ public class BoardState implements java.io.Serializable {
 	// TODO
 	// The null below is caused by the lastState in the constructor. idk what the
 	// intent is but I left it null for now. -Winter
-//	public BoardState copy() {
-//		BoardState copy = new BoardState(board,queenPos1,queenPos2,turn,lastState,lastMove);
-//		return copy;
-//	}
+	//	public BoardState copy() {
+	//		BoardState copy = new BoardState(board,queenPos1,queenPos2,turn,lastState,lastMove);
+	//		return copy;
+	//	}
 
 	public boolean isLastMoveEqual(int[] lastMoves) {
 		if (lastMoves[0] == lastMove.QX && lastMoves[1] == lastMove.QY && lastMoves[2] == lastMove.QmoveX

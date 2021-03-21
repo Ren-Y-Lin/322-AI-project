@@ -8,9 +8,9 @@ public class tester1 {
 		
 		BoardState bs = new BoardStateHead();
 		
-		for(int i = 0 ; i < 10; i++) {
+		for(int i = 0 ; i < 92; i++) {
 			printBoard(bs.board);
-			bs = MinmaxEvaluator.evaluateBoard(bs, 1).bs;
+			bs = MinmaxEvaluator.evaluateBoard(bs, 2).bs;
 		}
 		
 
