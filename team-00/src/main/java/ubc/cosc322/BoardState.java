@@ -58,6 +58,11 @@ public class BoardState implements java.io.Serializable {
 	ArrayList<BoardState> getNextStates() {
 		if (nextStates == null) {
 			nextStates = MoveGenerator.getMoves(this);
+			
+			if(nextStates ==null) {
+				return null;
+			}
+			
 			int won = 0;
 			int play = 0;
 

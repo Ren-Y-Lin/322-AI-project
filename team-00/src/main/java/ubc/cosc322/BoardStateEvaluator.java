@@ -50,9 +50,19 @@ public class BoardStateEvaluator {
 		
 		//Assuming turn is either 1 for player1 or 2 for player2
 		if(b.turn == 1)
-			return player1 - player2;
+			if(player1>0) {
+				return player1 - player2;
+			}else {
+				return -9999;
+			}
+			
 		else
-			return player2 - player1;
+			if(player2>0) {
+				return player2 - player1;
+			}else {
+				return 9999;
+			}
+			
 		
 	}
 	

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import sfs2x.client.entities.Room;
+import ygraph.ai.smartfox.games.Amazon;
 import ygraph.ai.smartfox.games.BaseGameGUI;
 import ygraph.ai.smartfox.games.GameClient;
 import ygraph.ai.smartfox.games.GameMessage;
@@ -25,8 +26,8 @@ public class COSC322Test extends GamePlayer{
 	
     private String userName = "Username";
     private String passwd = "Password";
- 
-	
+    BoardState bsh = new BoardStateHead();
+
     /**
      * The main method
      * @param args for name and passwd (current, any string would work)
@@ -106,19 +107,33 @@ public class COSC322Test extends GamePlayer{
     	//from the server.
     	//System.out.println("yomies   "+messageType+ "  "+ GameMessage.GAME_STATE_BOARD);
     	//System.out.println(msgDetails.toString());
-    	
+
     	if(messageType.equals(GameMessage.GAME_STATE_BOARD)) {
     		ArrayList<Integer> gs = (ArrayList<Integer>) msgDetails.get("game-state");
     		System.out.println("homies" + msgDetails.get("game-state"));
     		gamegui.setGameState(gs);
     	}
     	
-    	if(messageType.equals(GameMessage.GAME_ACTION_MOVE)) {
 
+    	
+    	if(messageType.equals(GameMessage.GAME_ACTION_MOVE)) {
+    		
     		gamegui.updateGameState(msgDetails);
+    		
+    		
+    		BoardState temp = MinmaxEvaluator.evaluateBoard(bsh, 4).bs;
+    		bsh = temp;
+    		
+    		
+    		
+
+    		gameClient.sendMoveMessage(temp.lastMove.getQueenPos(), temp.lastMove.getQueenMove(), temp.lastMove.getArrowPos());
+    		gamegui.updateGameState(temp.lastMove.getQueenPos(), temp.lastMove.getQueenMove(), temp.lastMove.getArrowPos());
+    		
     	}
-    	
-    	
+
+		//gameClient.leaveCurrentRoom();
+		System.out.println("MessageType: "+messageType);
     	//For a detailed description of the message types and format, 
     	//see the method GamePlayer.handleGameMessage() in the game-client-api document. 
     	    	

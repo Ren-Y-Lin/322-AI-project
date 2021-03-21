@@ -12,12 +12,18 @@ public class MarkovTree {
 	BoardState currentBoard = bsh;
 
 	public MarkovTree() {
-
+		//loadTree("save.txt");
+	}
+	
+	public static void main(String[] args) {
+		MarkovTree mt = new MarkovTree();
+		mt.train(4);
+		System.out.println("trained");
 	}
 
 	 // train tree
     public void train(int iterations) {
-        for (int i = 0; i < 92; i++) {
+        for (int i = 0; i < iterations; i++) {
             ArrayList<BoardState> nextStates;
             nextStates = currentBoard.getNextStates();
             while (nextStates != null) {
@@ -41,6 +47,8 @@ public class MarkovTree {
             currentBoard = bsh;
 
         }
+        
+        saveTree("save.txt");
     }
     
     public BoardState play(BoardState currentBoard){
