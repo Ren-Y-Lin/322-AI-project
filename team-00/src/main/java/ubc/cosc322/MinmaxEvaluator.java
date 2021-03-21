@@ -43,7 +43,7 @@ public class MinmaxEvaluator {
 				minPos = i;
 				wbs = temp.bs;
 			}
-
+			
 			
 		}
 		
