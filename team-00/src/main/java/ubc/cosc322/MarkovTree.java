@@ -15,54 +15,54 @@ public class MarkovTree {
 
 	}
 
-	// train tree
-	public void train(int iterations) {
-		for (int i = 0; i < 92; i++) {
-			ArrayList<BoardState> nextStates;
-			nextStates = currentBoard.getNextStates();
-			while (nextStates != null) {
-				
-				//Evalaute Each Board State and pick the best one
-				double maxVal = -90;
-				BoardState bbs = null;
-				for (BoardState bs : nextStates) {
-					if (maxVal < ((double) bs.timesWon) / bs.timesPlayed) {
-						maxVal = ((double) bs.timesWon) / bs.timesPlayed;
-						bbs = bs;
-					}
-					
-					
+	 // train tree
+    public void train(int iterations) {
+        for (int i = 0; i < 92; i++) {
+            ArrayList<BoardState> nextStates;
+            nextStates = currentBoard.getNextStates();
+            while (nextStates != null) {
+                
+                //Evalaute Each Board State and pick the best one
+                double maxVal = -90;
+                BoardState bbs = null;
+                for (BoardState bs : nextStates) {
+                    if (maxVal < ((double) bs.timesWon) / bs.timesPlayed) {
+                        maxVal = ((double) bs.timesWon) / bs.timesPlayed;
+                        bbs = bs;
+                    }
+                    
+                    
 
-				}
-				//Go down 1 layer on the best board state
-				currentBoard = bbs;
+                }
+                //Go down 1 layer on the best board state
+                currentBoard = bbs;
 
-			}
-			currentBoard = bsh;
+            }
+            currentBoard = bsh;
 
-		}
-	}
-	
-	public BoardState play(BoardState curresntBoard){
-		if(currentBoard.getTimesPlayed() > 0) 
-		{
-			int high = 0;
-			BoardState highState = null;
-			for(BoarState bs : currentBoard.nextMoves()) 
-			{
-				if(bs.getTimesPlayed > high) 
-				{
-					high = bs.getTimesPlayed;
-					highState = bs;
-				}
-			}
-			return highState;
-			
-		} else
-		{
-			return MinmaxEvaluator.evaluateBoard(currentBoard, 4).bs;
-		}
-
+        }
+    }
+    
+    public BoardState play(BoardState currentBoard){
+        if(currentBoard.timesPlayed > 0) 
+        {
+            int high = 0;
+            BoardState highState = null;
+            for(BoardState bs : currentBoard.nextStates) 
+            {
+                if(bs.timesPlayed > high) 
+                {
+                    high = bs.timesPlayed;
+                    highState = bs;
+                }
+            }
+            return highState;
+            
+        } else
+        {
+            return MinmaxEvaluator.evaluateBoard(currentBoard, 4).bs;
+        }
+    }
 	// Save trained tree to file
 	public void saveTree(String fileName) {
 
