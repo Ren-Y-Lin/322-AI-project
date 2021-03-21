@@ -3,6 +3,7 @@ package ubc.cosc322;
 import java.util.ArrayList;
 
 public class BoardState implements java.io.Serializable {
+	static int getStateCounter = 0;
 
 	// evaluation
 	double evaluation = -1;
@@ -56,6 +57,8 @@ public class BoardState implements java.io.Serializable {
 	// Returns all possible board variation
 	// If none found, generates all of them and backpropagates instead
 	ArrayList<BoardState> getNextStates() {
+		
+
 		if (nextStates == null) {
 			nextStates = MoveGenerator.getMoves(this);
 			
@@ -68,7 +71,8 @@ public class BoardState implements java.io.Serializable {
 
 				
 			for (BoardState i : nextStates) {
-				
+				BoardState.getStateCounter++;
+				System.out.println(BoardState.getStateCounter +" out of "+ nextStates.size());
 				Simulator.playTillEnd(i);
 				won+=i.timesWon;
 				play++;

@@ -14,14 +14,22 @@ public class Simulator {
         //Generate the next set of Valid moves
 
         //BoardState temp = bs;
-        //double tempVal = MinmaxEvaluator.evaluateBoard(bs, 5).value;        
-        BoardPackage tempP = MinmaxEvaluator.evaluateBoard(bs, 5);
-        while(tempP.value<9999 || tempP.value>-9999) {
+        //double tempVal = MinmaxEvaluator.evaluateBoard(bs, 5).value;      
+		//System.out.println("minmax loop");
+		
+        BoardPackage tempP = MinmaxEvaluator.evaluateBoard(bs, 2);
+        //System.out.println("loop end");
+        
+        //System.out.println("pre loop");
+        
+        //int count = 0;
+        while(tempP.value<9998 && tempP.value>-9998) {
+        	//System.out.println("in loop :"+ count++);
             if(tempP.bs==null) {
             	System.out.println("null");
             }
         	
-            tempP = MinmaxEvaluator.evaluateBoard(tempP.bs, 5);
+            tempP = MinmaxEvaluator.evaluateBoard(tempP.bs, 2);
             //temp = tempP.bs;
             //tempVal = tempP.value;
             

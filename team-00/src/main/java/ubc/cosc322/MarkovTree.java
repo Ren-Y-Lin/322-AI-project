@@ -26,11 +26,13 @@ public class MarkovTree {
         for (int i = 0; i < iterations; i++) {
             ArrayList<BoardState> nextStates;
             nextStates = currentBoard.getNextStates();
+            int count = 0;
+            System.out.println("in loop :"+ count++);
             while (nextStates != null) {
-                
+            	
                 //Evalaute Each Board State and pick the best one
                 double maxVal = -90;
-                BoardState bbs = null;
+                BoardState bbs = nextStates.get(0);
                 for (BoardState bs : nextStates) {
                     if (maxVal < ((double) bs.timesWon) / bs.timesPlayed) {
                         maxVal = ((double) bs.timesWon) / bs.timesPlayed;
@@ -38,14 +40,17 @@ public class MarkovTree {
                     }
                     
                     
-
                 }
+                
                 //Go down 1 layer on the best board state
+                
                 currentBoard = bbs;
-
+                printBoard(currentBoard.board);
+                
             }
+            
             currentBoard = bsh;
-
+            
         }
         
         saveTree("save.txt");
@@ -105,6 +110,16 @@ public class MarkovTree {
 			return;
 		}
 
+	}
+	
+	public static void printBoard(int[][] board) {
+		System.out.println("Board:");
+		for(int i = 0;board.length>i;i++) {
+			for(int j = 0;board[0].length>j;j++) {
+				System.out.print(board[i][j]+" ");
+			}
+			System.out.println();
+		}
 	}
 
 	public void updateBoard(int[] move) throws InvalidMoveException {

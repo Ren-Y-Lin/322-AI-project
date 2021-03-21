@@ -32,6 +32,10 @@ public class BoardStateEvaluator {
 		//Loop through the board
 		for(int x = 0; x < board.length; x++) {
 			for(int y = 0; y < board[x].length; y++) {
+				//Greedy dude
+				if(player1 > 10 && player2 > 10) {
+                    return 0;
+                }
 				if(board[x][y] == 0) {
 					resultNeighbors result = getNeighbors(board,x,y);
 					board = result.board;
@@ -45,8 +49,8 @@ public class BoardStateEvaluator {
 			}
 		}
 		
-		System.out.println("Player1 Score:" + player1);
-		System.out.println("Player2 Score:" + player2);
+		//System.out.println("Player1 Score:" + player1);
+		//System.out.println("Player2 Score:" + player2);
 		
 		//Assuming turn is either 1 for player1 or 2 for player2
 		if(b.turn == 1)
