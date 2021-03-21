@@ -1,5 +1,7 @@
 package ubc.cosc322;
 
+import java.util.ArrayList;
+
 //Class for movement description
 public class Move {
 	int QX;
@@ -18,6 +20,27 @@ public class Move {
 		this.arrowY = arrowY;
 		
 		
+	}
+	
+	public ArrayList<Integer> getQueenPos(){
+		ArrayList<Integer> ar = new ArrayList(2);
+		ar.add(QX);
+		ar.add(QY);
+		return ar;
+	}
+	
+	public ArrayList<Integer> getQueenMove(){
+		ArrayList<Integer> ar = new ArrayList(2);
+		ar.add(QmoveX);
+		ar.add(QmoveY);
+		return ar;
+	}
+	
+	public ArrayList<Integer> getArrowPos(){
+		ArrayList<Integer> ar = new ArrayList(2);
+		ar.add(arrowX);
+		ar.add(arrowY);
+		return ar;
 	}
 	
 	

@@ -17,7 +17,10 @@ public class Simulator {
         //double tempVal = MinmaxEvaluator.evaluateBoard(bs, 5).value;        
         BoardPackage tempP = MinmaxEvaluator.evaluateBoard(bs, 5);
         while(tempP.value<9999 || tempP.value>-9999) {
-            
+            if(tempP.bs==null) {
+            	System.out.println("null");
+            }
+        	
             tempP = MinmaxEvaluator.evaluateBoard(tempP.bs, 5);
             //temp = tempP.bs;
             //tempVal = tempP.value;
