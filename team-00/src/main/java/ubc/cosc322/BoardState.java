@@ -71,7 +71,7 @@ public class BoardState implements java.io.Serializable {
 
 
 			backpropagate(won, play);
-			return nextStates;
+			return null;
 			
 			
 		} else {

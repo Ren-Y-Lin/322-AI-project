@@ -8,45 +8,50 @@ public class MinmaxEvaluator {
 	
 	
 	//input: state of the board, the amount of moves to look into the future, whose turn it is
-	public static double evaluateBoard(BoardState b, int searchDepth) {
+	public static BoardPackage evaluateBoard(BoardState b, int searchDepth) {
 		
 		if(searchDepth == 0 ) {
-			return BoardStateEvaluator.evaluateBoard(b);
+			return new BoardPackage(null,BoardStateEvaluator.evaluateBoard(b));
 		}
 		
 		//might be empty array, might be null
 		ArrayList<BoardState> nextMove = MoveGenerator.getMoves(b);
 		
 		if(nextMove==null || nextMove.size()<1) {
-			return BoardStateEvaluator.evaluateBoard(b);
+			return new BoardPackage(null,-9999*b.turn);
 		}
 		
-		double maxVal = BoardStateEvaluator.evaluateBoard(b);
-		double minVal = BoardStateEvaluator.evaluateBoard(b);
+		double maxVal = -9999;
+		double minVal = 9999;
+		BoardState bbs = null,wbs = null;
 		
 		//do we need this?
 		int maxPos;
 		int minPos;
 		
 		for (int i = 0; i< nextMove.size();i++) {
-			double temp = evaluateBoard(b,searchDepth-1);
+
+			BoardPackage temp = evaluateBoard(nextMove.get(i),searchDepth-1);
 			
-			if(temp>maxVal) {
-				maxVal = temp;
+			if(temp.value>maxVal) {
+				maxVal = temp.value;
 				maxPos = i;
-			}else if(temp<minVal) {
+				bbs = temp.bs;
+			}else if(temp.value<minVal) {
 				
-				minVal = temp;
+				minVal = temp.value;
 				minPos = i;
+				wbs = temp.bs;
 			}
+
 			
 		}
 		
+		BoardPackage returnObj = new BoardPackage(b.turn == 1?bbs:wbs,b.turn == 1?maxVal:minVal);
 		
 		
 		
-		
-		return b.turn == 1?maxVal:minVal;
+		return returnObj;
 		
 		
 	}
