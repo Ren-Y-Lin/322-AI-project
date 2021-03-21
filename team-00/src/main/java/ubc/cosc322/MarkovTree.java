@@ -21,13 +21,6 @@ public class MarkovTree {
 			ArrayList<BoardState> nextStates;
 			nextStates = currentBoard.getNextStates();
 			while (nextStates != null) {
-				//Play each board state
-				for(BoardState bs : nextStates) 
-					{
-					int val = Simulator.playTillEnd(bs);
-					// (-1 + 1)/2 = 0 and (1 + 1)/2 = 1
-					currentBoard.backPropogate((val + 1)/2, 1)
-					}
 				
 				//Evalaute Each Board State and pick the best one
 				double maxVal = -90;
@@ -50,7 +43,7 @@ public class MarkovTree {
 		}
 	}
 	
-	public BoardState play(BoardState currentBoard){
+	public BoardState play(BoardState curresntBoard){
 		if(currentBoard.getTimesPlayed() > 0) 
 		{
 			int high = 0;
@@ -67,7 +60,7 @@ public class MarkovTree {
 			
 		} else
 		{
-			return MinmaxEvaluator.evaluateBoard(currentBoard).bs;
+			return MinmaxEvaluator.evaluateBoard(currentBoard, 4).bs;
 		}
 
 	// Save trained tree to file
