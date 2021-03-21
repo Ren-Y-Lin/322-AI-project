@@ -11,12 +11,14 @@ public class Simulator {
 	public static int playTillEnd(BoardState bs) {
 		//Generate the next set of Valid moves
 
-		BoardState temp = bs;
-		double tempVal = MinmaxEvaluator.evaluateBoard(bs, 4).value;
-		while(tempVal<9999 || tempVal>-9999) {
+		//BoardState temp = bs;
+		//double tempVal = MinmaxEvaluator.evaluateBoard(bs, 5).value;		
+		BoardPackage TempP = MinmaxEvaluator.evaluateBoard(bs, 5);
+		while(tempP.val<9999 || tempP.val>-9999) {
 			
-			BoardPackage tempP = MinmaxEvaluator.evaluateBoard(bs, 4);
-			tempVal = tempP.value;
+			BoardPackage tempP = MinmaxEvaluator.evaluateBoard(tempP.bs, 5);
+			//temp = tempP.bs;
+			//tempVal = tempP.value;
 			
 		}
 		
@@ -25,7 +27,7 @@ public class Simulator {
 
 		
 
-		if(tempVal==9999) {
+		if(tempP.val==9999) {
 			return 1;
 		}else {
 			return -1;
