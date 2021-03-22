@@ -129,7 +129,6 @@ public class COSC322Test extends GamePlayer{
     	}
     	//System.out.println("YOUR MESSAGE: " + messageType);
     	if(messageType.equals(GameMessage.GAME_STATE_BOARD)) {
-<<<<<<< HEAD
     		System.out.println("GAME STATE BOARD");
     		gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
     		//gamegui.updateGameState(msgDetails);
@@ -138,11 +137,6 @@ public class COSC322Test extends GamePlayer{
 
     	//	System.out.println("GAMESTATEBOARD - Game state is: " + gs);
     	//
-=======
-    		ArrayList<Integer> gs = (ArrayList<Integer>) msgDetails.get("game-state");
-    		//System.out.println("homies" + msgDetails);
-    		gamegui.setGameState(gs);
->>>>>>> 501b4d0894c5753ff3e59f352a98a81ddbebc99d
     	}
     	
     	
@@ -152,7 +146,6 @@ public class COSC322Test extends GamePlayer{
     	//	gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
     		gamegui.updateGameState(msgDetails);
     		
-<<<<<<< HEAD
     		Move oppMove = new Move ((ArrayList<Integer>)msgDetails.get("queen-position-current"), (ArrayList<Integer>)msgDetails.get("queen-position-next"),(ArrayList<Integer>) msgDetails.get("arrow-position"), true);
     		System.out.println("MOVE: " + oppMove.getQueenPos() + oppMove.getQueenMove() + oppMove.getArrowPos() +" TURN: " + bsh.turn);
     		System.out.println("THEIR MOVE");
@@ -172,32 +165,6 @@ public class COSC322Test extends GamePlayer{
     		System.out.println("MOVE: " + move.getQueenPos() + move.getQueenMove() + move.getArrowPos() +" TURN: " + bsh.turn);
     		gameClient.sendMoveMessage(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
     		gamegui.updateGameState(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
-=======
-    		System.out.println("homies22" + msgDetails);
-    		BoardState temp = MinmaxEvaluator.evaluateBoard(bsh, 4).bs;
-    		bsh = temp;
-    		
-    		
-    		
-
-    		gameClient.sendMoveMessage(temp.lastMove.getQueenPos(), temp.lastMove.getQueenMove(), temp.lastMove.getArrowPos());
-    		//gamegui.updateGameState((ArrayList<Integer>)msgDetails.get("queen-position-current"), temp.lastMove.getQueenMove(), temp.lastMove.getArrowPos());
-    		
-    	}
-    	
-    	if(messageType.equals(GameMessage.GAME_ACTION_START)) {
-    		System.out.println("homies33" + msgDetails);
-    		if( msgDetails.get("player-white").equals(userName)) {
-    			System.out.println("yah boi's white");
-    		}else {
-    			System.out.println("yah boi's black");
-    			
-    		}
-    		
-    	}
-    	if(messageType.equals(GameMessage.GAME_STATE_JOIN)) {
-    		System.out.println("homies33" + msgDetails);
->>>>>>> 501b4d0894c5753ff3e59f352a98a81ddbebc99d
     		
     	//	gamegui.updateGameState(mv.getQueenPos(), mv.getQueenMove(), mv.getArrowPos());
     	//	gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
