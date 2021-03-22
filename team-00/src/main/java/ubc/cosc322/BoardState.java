@@ -19,10 +19,11 @@ public class BoardState implements java.io.Serializable {
 
 	// weight for the markov tree selection algorithm
 	int weight = 0;
-
+	
 	// Tracks states
 	int timesWon = 0;
 	int timesPlayed = 0;
+	int value = 0;
 
 	// Tracks possible next moves
 	public ArrayList<BoardState> nextStates;
@@ -88,6 +89,16 @@ public class BoardState implements java.io.Serializable {
 		}
 
 	}
+	
+	ArrayList<BoardState> returnNewStates(){
+		if(nextStates == null) {
+			nextStates = MoveGenerator.getMoves(this);
+		}
+		
+		return nextStates;
+		
+		
+	}
 
 	// propagates wins and games backwards
 	public void backpropagate(int wins, int games) {
@@ -116,10 +127,8 @@ public class BoardState implements java.io.Serializable {
 	//		return copy;
 	//	}
 
-	public boolean isLastMoveEqual(int[] lastMoves) {
-		if (lastMoves[0] == lastMove.QX && lastMoves[1] == lastMove.QY && lastMoves[2] == lastMove.QmoveX
-				&& lastMoves[3] == lastMove.QmoveY && lastMoves[4] == lastMove.arrowX
-				&& lastMoves[5] == lastMove.arrowY) {
+	public boolean isLastMoveEqual(Move move) {
+		if (move.getQueenPos().equals(lastMove.getQueenPos()) && move.getQueenMove().equals(lastMove.getQueenMove()) && move.getArrowPos().equals(lastMove.getArrowPos())) {
 			return true;
 		}
 

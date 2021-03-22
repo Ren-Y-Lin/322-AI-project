@@ -24,7 +24,6 @@ public class MinmaxEvaluator {
 		}
 		
 		//might be empty array, might be null
-		//System.out.println("Called Move Gonerator");
 		ArrayList<BoardState> nextMove = MoveGenerator.getMoves(b);
 		//System.out.println("PRINTING MOVES");
 		for (int i = 0; i < nextMove.size(); i++) {
@@ -32,9 +31,9 @@ public class MinmaxEvaluator {
 		}
 		
 		if(nextMove==null || nextMove.size()<1) {
-			return new BoardPackage(b,-9999*b.turn);
+			return new BoardPackage(null,-9999*b.turn);
 		}
-		//System.out.println("breakpoint 1");
+		
 		double maxVal = -9999;
 		double minVal = 9999;
 		BoardState bbs = null,wbs = null;
@@ -42,8 +41,9 @@ public class MinmaxEvaluator {
 		//do we need this?
 		int maxPos;
 		int minPos;
-		//System.out.println("breakpoint 2");
+		
 		for (int i = 0; i< nextMove.size();i++) {
+
 			//System.out.println("breakpoint 3 size:"+ nextMove.size());
 			BoardPackage temp = evaluateBoard(nextMove.get(i),searchDepth-1);
 			
@@ -61,12 +61,13 @@ public class MinmaxEvaluator {
 				minPos = i;
 				wbs = temp.bs;
 			}
-			//System.out.println("breakpoint 4");
+
 			
 		}
 		
 		BoardPackage returnObj = new BoardPackage(b.turn == 1?bbs:wbs,b.turn == 1?maxVal:minVal);
 		
+
 		if(returnObj.bs == null) {
 			System.out.println("return board empty");
 		}
