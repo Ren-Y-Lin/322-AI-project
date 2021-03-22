@@ -22,13 +22,44 @@ public class MoveGenerator {
 		ArrayList<int[][]> validMovesQBoardStates = new ArrayList<int[][]>();
 		ArrayList<int[]> queenPositions = new ArrayList<int[]>();
 		
-
+		ArrayList<int[]> newQueenPos1 = new ArrayList<int[]>();
+		ArrayList<int[]> newQueenPos2 = new ArrayList<int[]>();
+		for(int i = 0; i < customBoard.length; i++) {
+			for(int i2 = 0; i2 < customBoard.length; i2++) {
+				if(customBoard[i][i2] == 1) {
+					int[] queenPos = {i,i2};
+					newQueenPos1.add(queenPos);
+				}
+				if(customBoard[i][i2] == 2) {
+					int[] queenPos = {i,i2};
+					newQueenPos2.add(queenPos);
+				}
+			}
+		}
+		
+		inputBoard.queenPos1 = newQueenPos1;
+		inputBoard.queenPos2 = newQueenPos2;
+		
+		
 		
 		ArrayList<BoardState> validMovesBoardStates = new ArrayList<BoardState>();
 		
 		ArrayList<int[]> currentQueenPos = ((inputBoard.turn == 1) ? inputBoard.queenPos1 : inputBoard.queenPos2);
 		
-
+		//Checking if queenPos is correct
+		for(int i = 0; i < currentQueenPos.size(); i++) {
+			int[] pos = currentQueenPos.get(i);
+			int check = customBoard[pos[0]][pos[1]];
+			int queenNumber;
+			if(inputBoard.turn == 1) {
+				queenNumber = 1;
+			}else {
+				queenNumber = 2;
+			}
+			if(queenNumber != check) {
+				System.out.println("ERROR: QUEEN MISMATCH");
+			}
+		}
 		
 		//Calculating All Queen Moves
 		//direction: 0-7 
@@ -50,7 +81,7 @@ public class MoveGenerator {
 
 					//create new board with valid new queen locations
 					int[][] newBoard = copyBoard(defaultBoard);
-					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 2:1;
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
 					validMovesQBoardStates.add(newBoard);
 					
 					for(int i =0; i< 4; i++) {
@@ -68,11 +99,11 @@ public class MoveGenerator {
 			for(int distance = 1; distance < 10; distance++) {
 				int checkX = queenX - distance;
 				int checkY = queenY + distance;
-				if(checkValid(customBoard,checkX,checkY)) {
+				if(checkValid(defaultBoard,checkX,checkY)) {
 
 					
 					int[][] newBoard = copyBoard(defaultBoard);
-					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 2:1;
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
 					validMovesQBoardStates.add(newBoard);
 					
 					for(int i =0; i< 4; i++) {
@@ -91,11 +122,11 @@ public class MoveGenerator {
 			for(int distance = 1; distance < 10; distance++) {
 				int checkX = queenX;
 				int checkY = queenY + distance;
-				if(checkValid(customBoard,checkX,checkY)) {
+				if(checkValid(defaultBoard,checkX,checkY)) {
 
 					
 					int[][] newBoard = copyBoard(defaultBoard);
-					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 2:1;
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
 					validMovesQBoardStates.add(newBoard);
 					
 					for(int i =0; i< 4; i++) {
@@ -114,11 +145,11 @@ public class MoveGenerator {
 			for(int distance = 1; distance < 10; distance++) {
 				int checkX = queenX + distance;
 				int checkY = queenY + distance;
-				if(checkValid(customBoard,checkX,checkY)) {
+				if(checkValid(defaultBoard,checkX,checkY)) {
 
 					
 					int[][] newBoard = copyBoard(defaultBoard);
-					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 2:1;
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
 					validMovesQBoardStates.add(newBoard);
 					
 					for(int i =0; i< 4; i++) {
@@ -137,11 +168,11 @@ public class MoveGenerator {
 			for(int distance = 1; distance < 10; distance++) {
 				int checkX = queenX + distance;
 				int checkY = queenY;
-				if(checkValid(customBoard,checkX,checkY)) {
+				if(checkValid(defaultBoard,checkX,checkY)) {
 
 					
 					int[][] newBoard = copyBoard(defaultBoard);
-					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 2:1;
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
 					validMovesQBoardStates.add(newBoard);
 					
 					for(int i =0; i< 4; i++) {
@@ -160,11 +191,11 @@ public class MoveGenerator {
 			for(int distance = 1; distance < 10; distance++) {
 				int checkX = queenX + distance;
 				int checkY = queenY - distance;
-				if(checkValid(customBoard,checkX,checkY)) {
+				if(checkValid(defaultBoard,checkX,checkY)) {
 
 					
 					int[][] newBoard = copyBoard(defaultBoard);
-					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 2:1;
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
 					validMovesQBoardStates.add(newBoard);
 					
 					for(int i =0; i< 4; i++) {
@@ -183,11 +214,11 @@ public class MoveGenerator {
 			for(int distance = 1; distance < 10; distance++) {
 				int checkX = queenX;
 				int checkY = queenY - distance;
-				if(checkValid(customBoard,checkX,checkY)) {
+				if(checkValid(defaultBoard,checkX,checkY)) {
 
 					
 					int[][] newBoard = copyBoard(defaultBoard);
-					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 2:1;
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
 					validMovesQBoardStates.add(newBoard);
 					
 					for(int i =0; i< 4; i++) {
@@ -206,11 +237,11 @@ public class MoveGenerator {
 			for(int distance = 1; distance < 10; distance++) {
 				int checkX = queenX - distance;
 				int checkY = queenY - distance;
-				if(checkValid(customBoard,checkX,checkY)) {
+				if(checkValid(defaultBoard,checkX,checkY)) {
 
 					
 					int[][] newBoard = copyBoard(defaultBoard);
-					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 2:1;
+					newBoard[checkX][checkY] = inputBoard.turn == 1 ? 1:2;
 					validMovesQBoardStates.add(newBoard);
 					
 					for(int i =0; i< 4; i++) {
@@ -470,7 +501,7 @@ public class MoveGenerator {
 		}
 		
 		
-		return list;
+		return al;
 		
 	}
 	
@@ -492,13 +523,22 @@ public class MoveGenerator {
 		
 		BoardState tester = new BoardStateHead();
 		
+		int[][] manual = { { 2, 3, 0, 0, 0, 3, 3, 3, 3, 2 }, { 3, 3, 0, 0, 0, 0, 3, 0, 3, 3 },
+                { 0, 3, 0, 0, 0, 0, 3, 2, 3, 2 }, { 1, 0, 3, 0, 3, 0, 0, 3, 3, 3 }, { 0, 0, 3, 0, 0, 0, 0, 3, 3, 0 },
+                { 0, 0, 3, 1, 0, 3, 1, 3, 0, 1 }, { 0, 0, 3, 0, 3, 3, 0, 3, 0, 0 }, { 0, 0, 0, 0, 0, 3, 0, 0, 3, 0 },
+                { 0, 0, 0, 0, 0, 3, 0, 0, 3, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+		
+		tester.board = manual;
+		
+		
 		ArrayList<BoardState> moves = MoveGenerator.getMoves(tester);
 		
-		for(int i = 0; i< 40; i++) {
-			printBoard(moves.get(i*5).board);
+		for(int i = 0; i< moves.size(); i++) {
+			printBoard(moves.get(i).board);
 		}
 		
 		System.out.println(moves.size());
+		printBoard(manual);
 	}
 	
 	public static void printBoard(int[][] board) {
