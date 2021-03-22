@@ -10,8 +10,17 @@ public class MinmaxEvaluator {
 	//input: state of the board, the amount of moves to look into the future, whose turn it is
 	public static BoardPackage evaluateBoard(BoardState b, int searchDepth) {
 		
-		if(searchDepth == 0 ) {
-			return new BoardPackage(null,BoardStateEvaluator.evaluateBoard(b));
+		//System.out.println("evaluating board at dept: " + searchDepth);
+		if(b == null) {
+			return null;
+		}
+		
+		if(searchDepth < 1 ) {
+			//System.out.println("breakpoint 6");
+			BoardPackage bp = new BoardPackage(b,BoardStateEvaluator.evaluateBoard(b));
+			//System.out.println("breakpoint 7");
+			return bp;
+			
 		}
 		
 		//might be empty array, might be null

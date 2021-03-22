@@ -7,6 +7,9 @@ public class MoveGenerator {
 	//Returns an array containing all the reachable board states
 	//generates board state and checks if each move wins but doesnt evaluate board state
 	public static ArrayList<BoardState> getMoves(BoardState inputBoard){
+		if(inputBoard == null) {
+			return null;
+		}
 		//Generate Queen Moves
 		int[][] customBoard = copyBoard(inputBoard.board);
 		
@@ -37,6 +40,7 @@ public class MoveGenerator {
 			//clone the current board and remove the queen that is moving
 			int[][] defaultBoard = copyBoard(customBoard);
 			defaultBoard[queenX][queenY] = 0;
+			
 			//N
 			for(int distance = 1; distance < 10; distance++) {
 				int checkX = queenX - distance;
@@ -493,6 +497,8 @@ public class MoveGenerator {
 		for(int i = 0; i< 40; i++) {
 			printBoard(moves.get(i*5).board);
 		}
+		
+		System.out.println(moves.size());
 	}
 	
 	public static void printBoard(int[][] board) {

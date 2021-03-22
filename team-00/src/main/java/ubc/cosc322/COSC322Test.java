@@ -27,6 +27,7 @@ public class COSC322Test extends GamePlayer{
     private String userName = "Username";
     private String passwd = "Password";
     BoardState bsh = new BoardStateHead();
+    int player = -1;
 
     /**
      * The main method
@@ -106,34 +107,75 @@ public class COSC322Test extends GamePlayer{
     	//This method will be called by the GameClient when it receives a game-related message
     	//from the server.
     	//System.out.println("yomies   "+messageType+ "  "+ GameMessage.GAME_STATE_BOARD);
+    	
+    	System.out.println("DETAILS BRO: " + msgDetails);
+    	//gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
+    	//gamegui.updateGameState(msgDetails);
     	//System.out.println(msgDetails.toString());
-
+    	//gamegui.updateGameState(msgDetails);
+    	if(messageType.equals(GameMessage.GAME_ACTION_START)) {
+    		System.out.println("WERE STARTING");
+    		Move move = new Move(3,0,4,0,5,0);
+    		System.out.println("MY MOVE");
+    		updateHead(move.getQueenPos(),move.getQueenMove(),move.getArrowPos());
+    		move = move.sendFormat();
+    		System.out.println("MOVE: " + move.getQueenPos() + move.getQueenMove() + move.getArrowPos() +" TURN: " + bsh.turn);
+    		gameClient.sendMoveMessage(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
+    		gamegui.updateGameState(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
+    		gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
+    
+    
+    		
+    	}
+    	//System.out.println("YOUR MESSAGE: " + messageType);
     	if(messageType.equals(GameMessage.GAME_STATE_BOARD)) {
-    		ArrayList<Integer> gs = (ArrayList<Integer>) msgDetails.get("game-state");
-    		System.out.println("homies" + msgDetails.get("game-state"));
-    		gamegui.setGameState(gs);
+    		System.out.println("GAME STATE BOARD");
+    		gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
+    		//gamegui.updateGameState(msgDetails);
+    		
+    	//	System.out.println("homies" + msgDetails.get("game-state"));
+
+    	//	System.out.println("GAMESTATEBOARD - Game state is: " + gs);
+    	//
     	}
     	
-
     	
     	if(messageType.equals(GameMessage.GAME_ACTION_MOVE)) {
-    		
+    	//	
+    		System.out.println("GAME ACTION MOVE");
+    	//	gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
     		gamegui.updateGameState(msgDetails);
     		
+    		Move oppMove = new Move ((ArrayList<Integer>)msgDetails.get("queen-position-current"), (ArrayList<Integer>)msgDetails.get("queen-position-next"),(ArrayList<Integer>) msgDetails.get("arrow-position"), true);
+    		System.out.println("MOVE: " + oppMove.getQueenPos() + oppMove.getQueenMove() + oppMove.getArrowPos() +" TURN: " + bsh.turn);
+    		System.out.println("THEIR MOVE");
+    		updateHead(oppMove.getQueenPos(), oppMove.getQueenMove(), oppMove.getArrowPos());
+    	//	System.out.print("GAME ACTION MOVE");
+    	//	ArrayList<Integer> gs = (ArrayList<Integer>) msgDetails.get("game-state");
+    	//	System.out.println("Game state is: " + gs);
     		
-    		BoardState temp = MinmaxEvaluator.evaluateBoard(bsh, 4).bs;
-    		bsh = temp;
+    		//bsh = minimax(bsh, 1, 2);
+    		BoardState temp = bsh.returnNewStates().get(50);
+    		Move move = temp.lastMove;
+    		System.out.println("MY MOVE");
+    		updateHead(move.getQueenPos(),move.getQueenMove(),move.getArrowPos());
+    	//	
     		
+    		move = move.sendFormat();
+    		System.out.println("MOVE: " + move.getQueenPos() + move.getQueenMove() + move.getArrowPos() +" TURN: " + bsh.turn);
+    		gameClient.sendMoveMessage(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
+    		gamegui.updateGameState(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
     		
-    		
-
-    		gameClient.sendMoveMessage(temp.lastMove.getQueenPos(), temp.lastMove.getQueenMove(), temp.lastMove.getArrowPos());
-    		gamegui.updateGameState(temp.lastMove.getQueenPos(), temp.lastMove.getQueenMove(), temp.lastMove.getArrowPos());
-    		
+    	//	gamegui.updateGameState(mv.getQueenPos(), mv.getQueenMove(), mv.getArrowPos());
+    	//	gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
+    	//	//gameClient.sendMoveMessage(temp.lastMove.getQueenPos(), temp.lastMove.getQueenMove(), temp.lastMove.getArrowPos());
+    	//	gamegui.updateGameState(temp.lastMove.getQueenPos(), temp.lastMove.getQueenMove(), temp.lastMove.getArrowPos());
+    	//	
     	}
 
 		//gameClient.leaveCurrentRoom();
-		System.out.println("MessageType: "+messageType);
+		//System.out.println("MessageType: "+messageType);
+		//gamegui.updateGameState(msgDetails);
     	//For a detailed description of the message types and format, 
     	//see the method GamePlayer.handleGameMessage() in the game-client-api document. 
     	    	
@@ -163,6 +205,109 @@ public class COSC322Test extends GamePlayer{
 		// TODO Auto-generated method stub
     	gameClient = new GameClient(userName, passwd, this);			
 	}
+	
+	public void updateHead(ArrayList<Integer> queenCur, ArrayList<Integer> queenNew, ArrayList<Integer> arrow) { //throws InvalidMoveException {
+		ArrayList<BoardState> nextStates = bsh.returnNewStates();
+		Move move = new Move(queenCur, queenNew, arrow, false);
 
- 
+		
+		
+		for (BoardState bs : nextStates) {
+			
+			if (bs.isLastMoveEqual(move)) {
+				bsh = bs;
+				System.out.println("FOUND BOARD -- NEW BORD IS:");
+				BoardStateEvaluator.printBoard(bs);
+				System.out.println("MOVE: " + bsh.lastMove.getQueenPos() + bsh.lastMove.getQueenMove() + bsh.lastMove.getArrowPos() +" TURN: " + bsh.turn);
+				return;
+			}
+		}
+	
+		System.out.println("COULD NOT FIND BOARD MOVE... RETURNING FIRST OPTION");
+		System.out.println("Failed to find MOVE: " + move.getQueenPos() + move.getQueenMove() + move.getArrowPos() +" TURN: " + bsh.turn);
+		bsh = nextStates.get(0);
+		BoardStateEvaluator.printBoard(bsh);
+		
+		System.out.println("MOVE: " + bsh.lastMove.getQueenPos() + bsh.lastMove.getQueenMove() + bsh.lastMove.getArrowPos() +" TURN: " + bsh.turn);
+		
+		
+
+	}
+	
+	public BoardState minimax(BoardState bs, int depth,int maxdepth) {
+		
+		
+		if(depth < 1 ) {
+			//System.out.println("breakpoint 6");
+			BoardState out = bs;
+			bs.value = BoardStateEvaluator.evaluateBoard(bs);
+			//System.out.println("breakpoint 7");
+			return bs;
+		}
+			
+
+		
+		//might be empty array, might be null
+		ArrayList<BoardState> nextMoves = bs.returnNewStates();
+		
+		if(nextMoves==null || nextMoves.size()<1) {
+			System.out.println("GAME LOSS");
+			return null;
+		}
+		
+		
+		BoardState bbs = null;
+		
+	
+	
+		
+		if(depth%2 == 0) {
+			double minVal = 9999;
+		for (BoardState board : nextMoves) {
+
+			board.value = minimax(board,depth-1, maxdepth).value;
+			
+			if(minVal > board.value) {
+				minVal = board.value;
+				bbs = board;
+			}
+			
+		
+		}
+
+			
+		} else {
+			double maxVal = -9999;
+			for (BoardState board : nextMoves) {
+
+				board.value = minimax(board,depth-1, maxdepth).value;
+				
+				
+				if(maxVal < board.value) {
+					maxVal = board.value;
+					bbs = board;
+				}
+		}
+			
+		}
+		
+		if(maxdepth == depth) {
+			
+		return bbs;
+		} else {
+			bs.value = bbs.value;
+			return bs;
+		}
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+
+	
+
 }//end of class
