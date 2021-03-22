@@ -114,16 +114,33 @@ public class COSC322Test extends GamePlayer{
     	//System.out.println(msgDetails.toString());
     	//gamegui.updateGameState(msgDetails);
     	if(messageType.equals(GameMessage.GAME_ACTION_START)) {
-    		System.out.println("WERE STARTING");
-    		bsh = minimax(bsh, 1, 1);
-    		System.out.println("MY MOVE");
-    		Move move = bsh.lastMove;
-    		updateHead(move.getQueenPos(),move.getQueenMove(),move.getArrowPos());
-    		move = move.sendFormat();
-    		System.out.println("MOVE: " + move.getQueenPos() + move.getQueenMove() + move.getArrowPos() +" TURN: " + bsh.turn);
-    		gameClient.sendMoveMessage(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
-    		gamegui.updateGameState(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
-    		gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
+    		if(msgDetails.get("player-white").toString().equals(userName)) {
+    			player = -1;
+    			
+    		}else {
+    			
+    			player = 1;
+    		}
+    		System.out.println(player);
+    		if(player==1) {
+    			
+        		System.out.println("WERE STARTING");
+        		//bsh = minimax(bsh, 1, 1);
+        		bsh=bsh.returnNewStates().get(0);
+        		System.out.println("MY MOVE");
+        		Move move = bsh.lastMove;
+        		//updateHead(move.getQueenPos(),move.getQueenMove(),move.getArrowPos());
+        		System.out.println("PreMOVE: " + move.getQueenPos() + move.getQueenMove() + move.getArrowPos() +" TURN: " + bsh.turn);
+        		move = move.sendFormat();
+        		System.out.println("MOVE: " + move.getQueenPos() + move.getQueenMove() + move.getArrowPos() +" TURN: " + bsh.turn);
+        		gameClient.sendMoveMessage(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
+        		gamegui.updateGameState(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
+        		//gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
+    			
+    			
+    		}
+    		
+
     
     
     		
@@ -132,6 +149,8 @@ public class COSC322Test extends GamePlayer{
     	if(messageType.equals(GameMessage.GAME_STATE_BOARD)) {
     		System.out.println("GAME STATE BOARD");
     		gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
+    		bsh = new BoardStateHead();
+
     		//gamegui.updateGameState(msgDetails);
     		
     	//	System.out.println("homies" + msgDetails.get("game-state"));
@@ -155,11 +174,32 @@ public class COSC322Test extends GamePlayer{
     	//	ArrayList<Integer> gs = (ArrayList<Integer>) msgDetails.get("game-state");
     	//	System.out.println("Game state is: " + gs);
     		
-    		bsh = minimax(bsh, 1, 1);
-    		//BoardState temp = bsh.returnNewStates().get(50);
+    		// bsh = minimax(bsh, 3, 3);
+    		int max = -9999;
+    		int min = 9999;
+    		BoardState bbs = bsh.returnNewStates().get(0);
+    		BoardState wbs = bsh.returnNewStates().get(0);
+    		for(int i = 0 ; i < bsh.returnNewStates().size(); i++) {
+    			if(BoardStateEvaluator.evaluateBoard(bsh.returnNewStates().get(i))>max) {
+    				max = BoardStateEvaluator.evaluateBoard(bsh.returnNewStates().get(i));
+    				bbs = bsh.returnNewStates().get(i);
+    			}else if(BoardStateEvaluator.evaluateBoard(bsh.returnNewStates().get(i))<min){
+    				min = BoardStateEvaluator.evaluateBoard(bsh.returnNewStates().get(i));
+    				wbs = bsh.returnNewStates().get(i);
+    			}
+    		}
+    		BoardState temp;
+    		if(player == 1) {
+    			temp = bbs;
+    		}else {
+    			temp = wbs;
+    		}
+    		 
+    		bsh = temp;
     		Move move = bsh.lastMove;
+
     		System.out.println("MY MOVE");
-    		updateHead(move.getQueenPos(),move.getQueenMove(),move.getArrowPos());
+    		//updateHead(move.getQueenPos(),move.getQueenMove(),move.getArrowPos());
     	//	
     		
     		move = move.sendFormat();

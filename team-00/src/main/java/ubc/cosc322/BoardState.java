@@ -91,11 +91,11 @@ public class BoardState implements java.io.Serializable {
 	}
 	
 	ArrayList<BoardState> returnNewStates(){
-		if(nextStates == null) {
-			nextStates = MoveGenerator.getMoves(this);
-		}
+//		if(nextStates == null) {
+//			nextStates = MoveGenerator.getMoves(this);
+//		}
 		
-		return nextStates;
+		return MoveGenerator.getMoves(this);
 		
 		
 	}
