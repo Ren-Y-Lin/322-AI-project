@@ -1,9 +1,7 @@
 
 package ubc.cosc322;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import sfs2x.client.entities.Room;
 import ygraph.ai.smartfox.games.Amazon;
@@ -121,7 +119,9 @@ public class COSC322Test extends GamePlayer {
 
 				System.out.println("WERE STARTING");
 				// bsh = minimax(bsh, 1, 1);
-				bsh = bsh.returnNewStates().get(0);
+				ArrayList<BoardState> newStates = bsh.returnNewStates();
+				Collections.shuffle(newStates);
+				bsh = newStates.get(0);
 				System.out.println("MY MOVE");
 				Move move = bsh.lastMove;
 				// updateHead(move.getQueenPos(),move.getQueenMove(),move.getArrowPos());
@@ -163,7 +163,12 @@ public class COSC322Test extends GamePlayer {
 			System.out.println("MOVE: " + oppMove.getQueenPos() + oppMove.getQueenMove() + oppMove.getArrowPos()
 					+ " TURN: " + bsh.turn);
 			System.out.println("THEIR MOVE");
-			updateHead(oppMove.getQueenPos(), oppMove.getQueenMove(), oppMove.getArrowPos());
+			try {
+				updateHead(oppMove.getQueenPos(), oppMove.getQueenMove(), oppMove.getArrowPos());
+			} catch(InvalidMoveException e) {
+				return false;
+			}
+			
 			// System.out.print("GAME ACTION MOVE");
 			// ArrayList<Integer> gs = (ArrayList<Integer>) msgDetails.get("game-state");
 			// System.out.println("Game state is: " + gs);
@@ -171,31 +176,78 @@ public class COSC322Test extends GamePlayer {
 			// bsh = minimax(bsh, 3, 3);
 			int max = -9999;
 			int min = 9999;
-			BoardState bbs = bsh.returnNewStates().get(0);
-			BoardState wbs = bsh.returnNewStates().get(0);
+			
+			ArrayList<BoardState> newStates = bsh.returnNewStates();
+			ArrayList<BoardState> newStates2= newStates.get(0).returnNewStates();
+			
+			BoardState bbs = newStates.get(0);
+			BoardState wbs = newStates.get(0);
+			
+			
 
-			if (bsh.returnNewStates().size() > 150) {
-				for (int i = 0; i < bsh.returnNewStates().size(); i++) {
-					if (BoardStateEvaluator.evaluateBoard(bsh.returnNewStates().get(i)) > max) {
-						max = BoardStateEvaluator.evaluateBoard(bsh.returnNewStates().get(i));
-						bbs = bsh.returnNewStates().get(i);
-					} else if (BoardStateEvaluator.evaluateBoard(bsh.returnNewStates().get(i)) < min) {
-						min = BoardStateEvaluator.evaluateBoard(bsh.returnNewStates().get(i));
-						wbs = bsh.returnNewStates().get(i);
+//			if (newStates.size() > 250 ) {
+//				for (int i = 0; i < newStates.size(); i++) {
+//					if (BoardStateEvaluator.evaluateBoard(newStates.get(i)) >= max) {
+//						max = BoardStateEvaluator.evaluateBoard(newStates.get(i));
+//						bbs = newStates.get(i);
+//					} else if (BoardStateEvaluator.evaluateBoard(newStates.get(i)) <= min) {
+//						min = BoardStateEvaluator.evaluateBoard(newStates.get(i));
+//						wbs = newStates.get(i);
+//					}
+//				}
+//				BoardState temp;
+//				if (player == 1) {
+//					temp = bbs;
+//				} else {
+//					temp = wbs;
+//				}
+//				bsh = temp;
+//			} else {
+//			}
+			
+			counter = 0;
+			Collections.shuffle(newStates);
+			try {
+				if(newStates.size() > 50 && newStates2.size() > 50) {
+					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
+					System.out.println("MINIMAX: 3");
+					bsh = minimax(bsh, 3, 3);
+				} else {
+					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
+					System.out.println("MINIMAX: 4");
+					bsh = minimax(bsh, 4, 4);
+				}
+				
+				
+			}catch (InvalidMoveException e) {
+				
+				for (int i = 0; i < newStates.size(); i++) {
+					if (BoardStateEvaluator.evaluateBoard(newStates.get(i)) > max) {
+						max = BoardStateEvaluator.evaluateBoard(newStates.get(i));
+						bbs = newStates.get(i);
+					} else if (BoardStateEvaluator.evaluateBoard(newStates.get(i)) < min) {
+						min = BoardStateEvaluator.evaluateBoard(newStates.get(i));
+						wbs = newStates.get(i);
 					}
 				}
-			} else {
-				bsh = minimax(bsh, 3, 3);
+				BoardState temp;
+				if (player == 1) {
+					temp = bbs;
+				} else {
+					temp = wbs;
+				}
+				bsh = temp;
+				
 			}
-			BoardState temp;
-			if (player == 1) {
-				temp = bbs;
-			} else {
-				temp = wbs;
-			}
+				
+				
 
-			bsh = temp;
+			if(newStates.size() < 1) {
+				System.out.println("GAME IS REALLY OVER I THINK/HOPE");
+			}
 			Move move = bsh.lastMove;
+			
+			
 
 			System.out.println("MY MOVE");
 			// updateHead(move.getQueenPos(),move.getQueenMove(),move.getArrowPos());
@@ -250,7 +302,7 @@ public class COSC322Test extends GamePlayer {
 		gameClient = new GameClient(userName, passwd, this);
 	}
 
-	public void updateHead(ArrayList<Integer> queenCur, ArrayList<Integer> queenNew, ArrayList<Integer> arrow) { // throws
+	public void updateHead(ArrayList<Integer> queenCur, ArrayList<Integer> queenNew, ArrayList<Integer> arrow) throws InvalidMoveException { // throws
 																													// InvalidMoveException
 																													// {
 		ArrayList<BoardState> nextStates = bsh.returnNewStates();
@@ -268,38 +320,81 @@ public class COSC322Test extends GamePlayer {
 			}
 		}
 
-		System.out.println("COULD NOT FIND BOARD MOVE... RETURNING FIRST OPTION");
+		System.out.println("COULD NOT FIND BOARD MOVE... ILLEGAL MOVE");
 		System.out.println("Failed to find MOVE: " + move.getQueenPos() + move.getQueenMove() + move.getArrowPos()
 				+ " TURN: " + bsh.turn);
-		bsh = nextStates.get(0);
-		BoardStateEvaluator.printBoard(bsh);
-
-		System.out.println("MOVE: " + bsh.lastMove.getQueenPos() + bsh.lastMove.getQueenMove()
-				+ bsh.lastMove.getArrowPos() + " TURN: " + bsh.turn);
+		System.out.println("EXITING CODE");
+		throw new InvalidMoveException("");
+//		bsh = nextStates.get(0);
+//		BoardStateEvaluator.printBoard(bsh);
+//
+//		System.out.println("MOVE: " + bsh.lastMove.getQueenPos() + bsh.lastMove.getQueenMove()
+//				+ bsh.lastMove.getArrowPos() + " TURN: " + bsh.turn);
+		
 
 	}
 
-	public BoardState minimax(BoardState bs, int depth, int maxdepth) {
-		System.out.println("uwu");
+	int counter = 0;
+	
+	public BoardState minimax(BoardState bs, int depth, int maxdepth) throws InvalidMoveException {
+		//System.out.println(counter++);
+		counter++;
+		if(counter%100000 == 0) {
+			System.out.println(counter);
+		}
+		if(counter > 7000000 && maxdepth == 3) {
+			throw new InvalidMoveException("lol");
+		}
+		if(counter > 10000000 && maxdepth == 4) {
+			throw new InvalidMoveException("lol");
+		}
+		
 		if (depth < 1) {
 			// System.out.println("breakpoint 6");
-			BoardState out = bs;
-			bs.value = BoardStateEvaluator.evaluateBoard(bs);
+			if(bs.turn == 1) {
+				bs.value = -BoardStateEvaluator.evaluateBoard(bs);
+			}
+			else {
+				bs.value = BoardStateEvaluator.evaluateBoard(bs);
+			}
+			
 			// System.out.println("breakpoint 7");
 			return bs;
 		}
 
 		// might be empty array, might be null
 		ArrayList<BoardState> nextMoves = bs.returnNewStates();
-
-		if (nextMoves == null || nextMoves.size() < 1) {
-			System.out.println("GAME LOSS");
-			return null;
+		if (depth == maxdepth) {
+			if (nextMoves == null || nextMoves.size() < 1) {
+				System.out.println("GAME LOSS");
+				Move move = bs.lastMove.sendFormat();
+				gameClient.sendMoveMessage(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
+				gamegui.updateGameState(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
+				return bs;
+			}
 		}
+		
+		
+		if (nextMoves == null || nextMoves.size() < 1) {
+			if(bs.turn == player) {
+				bs.value = -9998;
+			}
+			else {
+				bs.value = 9998;
+			}
+			
+			System.out.println("GAME OVER");
+			return bs;
+		} 
+//		else if(nextMoves.get(0).returnNewStates().size() < 1) {
+//			bs.value = 9999;
+//			return bs;
+//		}
+		
 
 		BoardState bbs = null;
 
-		if (depth % 2 == 0) {
+		if (depth % 2 != maxdepth%2) {
 			double minVal = 9999;
 			for (BoardState board : nextMoves) {
 
