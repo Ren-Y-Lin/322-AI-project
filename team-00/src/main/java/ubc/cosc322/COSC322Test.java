@@ -110,7 +110,7 @@ public class COSC322Test extends GamePlayer{
 
     	if(messageType.equals(GameMessage.GAME_STATE_BOARD)) {
     		ArrayList<Integer> gs = (ArrayList<Integer>) msgDetails.get("game-state");
-    		System.out.println("homies" + msgDetails.get("game-state"));
+    		//System.out.println("homies" + msgDetails);
     		gamegui.setGameState(gs);
     	}
     	
@@ -120,7 +120,7 @@ public class COSC322Test extends GamePlayer{
     		
     		gamegui.updateGameState(msgDetails);
     		
-    		
+    		System.out.println("homies22" + msgDetails);
     		BoardState temp = MinmaxEvaluator.evaluateBoard(bsh, 4).bs;
     		bsh = temp;
     		
@@ -128,7 +128,22 @@ public class COSC322Test extends GamePlayer{
     		
 
     		gameClient.sendMoveMessage(temp.lastMove.getQueenPos(), temp.lastMove.getQueenMove(), temp.lastMove.getArrowPos());
-    		gamegui.updateGameState(temp.lastMove.getQueenPos(), temp.lastMove.getQueenMove(), temp.lastMove.getArrowPos());
+    		//gamegui.updateGameState((ArrayList<Integer>)msgDetails.get("queen-position-current"), temp.lastMove.getQueenMove(), temp.lastMove.getArrowPos());
+    		
+    	}
+    	
+    	if(messageType.equals(GameMessage.GAME_ACTION_START)) {
+    		System.out.println("homies33" + msgDetails);
+    		if( msgDetails.get("player-white").equals(userName)) {
+    			System.out.println("yah boi's white");
+    		}else {
+    			System.out.println("yah boi's black");
+    			
+    		}
+    		
+    	}
+    	if(messageType.equals(GameMessage.GAME_STATE_JOIN)) {
+    		System.out.println("homies33" + msgDetails);
     		
     	}
 
