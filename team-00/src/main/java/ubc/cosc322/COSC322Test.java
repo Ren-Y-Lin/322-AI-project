@@ -206,16 +206,16 @@ public class COSC322Test extends GamePlayer {
 //			}
 			
 			counter = 0;
-			Collections.shuffle(newStates);
+			Collections.shuffle(newStates);///////////????????????????????????????????????????????
 			try {
 				if(newStates.size() > 50 && newStates2.size() > 50) {
 					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
 					System.out.println("MINIMAX: 3");
-					bsh = minimax(bsh, 3, 3);
+					bsh = minimaxstart(bsh, 3, 3);
 				} else {
 					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
 					System.out.println("MINIMAX: 4");
-					bsh = minimax(bsh, 4, 4);
+					bsh = minimaxstart(bsh, 4, 4);
 				}
 				
 				
@@ -306,6 +306,7 @@ public class COSC322Test extends GamePlayer {
 																													// InvalidMoveException
 																													// {
 		ArrayList<BoardState> nextStates = bsh.returnNewStates();
+		Collections.shuffle(nextStates);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<ADDED CHECK PERF
 		Move move = new Move(queenCur, queenNew, arrow, false);
 
 		for (BoardState bs : nextStates) {
@@ -336,13 +337,132 @@ public class COSC322Test extends GamePlayer {
 
 	int counter = 0;
 	
+	public BoardState minimaxstart(BoardState bs, int depth, int maxdepth) throws InvalidMoveException {
+		//System.out.println(counter++);
+		counter++;
+		if(counter%100000 == 0) {
+			System.out.println(counter);
+		}
+		if(counter > 20000000 && maxdepth == 3) {
+			throw new InvalidMoveException("lol");
+		}
+		if(counter > 11000000 && maxdepth == 4) {
+			throw new InvalidMoveException("lol");
+		}
+		
+		if (depth < 1) {
+			// System.out.println("breakpoint 6");
+			if(bs.turn == 1) {
+				bs.value = -BoardStateEvaluator.evaluateBoard(bs);
+			}
+			else {
+				bs.value = BoardStateEvaluator.evaluateBoard(bs);
+			}
+			
+			// System.out.println("breakpoint 7");
+			return bs;
+		}
+
+		// might be empty array, might be null
+		ArrayList<BoardState> nextMoves = bs.returnNewStates();
+		if (depth == maxdepth) {
+			if (nextMoves == null || nextMoves.size() < 1) {
+				System.out.println("GAME LOSS");
+				Move move = bs.lastMove.sendFormat();
+				gameClient.sendMoveMessage(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
+				gamegui.updateGameState(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
+				return bs;
+			}
+		}
+		
+		
+		if (nextMoves == null || nextMoves.size() < 1) {
+			if(bs.turn == player) {
+				bs.value = -9998;
+			}
+			else {
+				bs.value = 9998;
+			}
+			
+			System.out.println("GAME OVER");
+			return bs;
+		} 
+//		else if(nextMoves.get(0).returnNewStates().size() < 1) {
+//			bs.value = 9999;
+//			return bs;
+//		}
+		
+
+		BoardState bbs = null;
+
+		if (depth % 2 != maxdepth%2) {
+			double minVal = 9999;
+
+			
+			Collections.synchronizedList(nextMoves).parallelStream().forEach( s -> {
+				
+				try {
+					s.value = minimax(s, depth - 1, maxdepth).value;
+				} catch (InvalidMoveException e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+				}
+				
+			});
+			for (BoardState board : nextMoves) {
+
+
+
+				if (minVal > board.value) {
+					minVal = board.value;
+					bbs = board;
+				}
+
+			}
+
+		} else {
+			double maxVal = -9999;
+			
+			Collections.synchronizedList(nextMoves).parallelStream().forEach( s -> {
+				
+				try {
+					s.value = minimax(s, depth - 1, maxdepth).value;
+				} catch (InvalidMoveException e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+				}
+				
+			});
+			
+			for (BoardState board : nextMoves) {
+
+				
+
+				if (maxVal < board.value) {
+					maxVal = board.value;
+					bbs = board;
+				}
+			}
+
+		}
+
+		if (maxdepth == depth) {
+
+			return bbs;
+		} else {
+			bs.value = bbs.value;
+			return bs;
+		}
+
+	}
+	
 	public BoardState minimax(BoardState bs, int depth, int maxdepth) throws InvalidMoveException {
 		//System.out.println(counter++);
 		counter++;
 		if(counter%100000 == 0) {
 			System.out.println(counter);
 		}
-		if(counter > 7000000 && maxdepth == 3) {
+		if(counter > 20000000 && maxdepth == 3) {
 			throw new InvalidMoveException("lol");
 		}
 		if(counter > 10000000 && maxdepth == 4) {
