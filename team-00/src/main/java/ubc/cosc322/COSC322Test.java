@@ -2,6 +2,7 @@
 package ubc.cosc322;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import sfs2x.client.entities.Room;
 import ygraph.ai.smartfox.games.Amazon;
@@ -165,10 +166,10 @@ public class COSC322Test extends GamePlayer {
 			System.out.println("THEIR MOVE");
 			try {
 				updateHead(oppMove.getQueenPos(), oppMove.getQueenMove(), oppMove.getArrowPos());
-			} catch(InvalidMoveException e) {
+			} catch (InvalidMoveException e) {
 				return false;
 			}
-			
+
 			// System.out.print("GAME ACTION MOVE");
 			// ArrayList<Integer> gs = (ArrayList<Integer>) msgDetails.get("game-state");
 			// System.out.println("Game state is: " + gs);
@@ -176,14 +177,12 @@ public class COSC322Test extends GamePlayer {
 			// bsh = minimax(bsh, 3, 3);
 			int max = -9999;
 			int min = 9999;
-			
+
 			ArrayList<BoardState> newStates = bsh.returnNewStates();
-			ArrayList<BoardState> newStates2= newStates.get(0).returnNewStates();
-			
+			ArrayList<BoardState> newStates2 = newStates.get(0).returnNewStates();
+
 			BoardState bbs = newStates.get(0);
 			BoardState wbs = newStates.get(0);
-			
-			
 
 //			if (newStates.size() > 250 ) {
 //				for (int i = 0; i < newStates.size(); i++) {
@@ -204,11 +203,11 @@ public class COSC322Test extends GamePlayer {
 //				bsh = temp;
 //			} else {
 //			}
-			
+
 			counter = 0;
-			Collections.shuffle(newStates);///////////????????????????????????????????????????????
+			Collections.shuffle(newStates);/////////// ????????????????????????????????????????????
 			try {
-				if(newStates.size() > 50 && newStates2.size() > 50) {
+				if (newStates.size() > 50 && newStates2.size() > 50) {
 					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
 					System.out.println("MINIMAX: 3");
 					bsh = minimaxstart(bsh, 3, 3);
@@ -217,10 +216,9 @@ public class COSC322Test extends GamePlayer {
 					System.out.println("MINIMAX: 4");
 					bsh = minimaxstart(bsh, 4, 4);
 				}
-				
-				
-			}catch (InvalidMoveException e) {
-				
+
+			} catch (InvalidMoveException e) {
+
 				for (int i = 0; i < newStates.size(); i++) {
 					if (BoardStateEvaluator.evaluateBoard(newStates.get(i)) > max) {
 						max = BoardStateEvaluator.evaluateBoard(newStates.get(i));
@@ -237,17 +235,13 @@ public class COSC322Test extends GamePlayer {
 					temp = wbs;
 				}
 				bsh = temp;
-				
-			}
-				
-				
 
-			if(newStates.size() < 1) {
+			}
+
+			if (newStates.size() < 1) {
 				System.out.println("GAME IS REALLY OVER I THINK/HOPE");
 			}
 			Move move = bsh.lastMove;
-			
-			
 
 			System.out.println("MY MOVE");
 			// updateHead(move.getQueenPos(),move.getQueenMove(),move.getArrowPos());
@@ -302,11 +296,12 @@ public class COSC322Test extends GamePlayer {
 		gameClient = new GameClient(userName, passwd, this);
 	}
 
-	public void updateHead(ArrayList<Integer> queenCur, ArrayList<Integer> queenNew, ArrayList<Integer> arrow) throws InvalidMoveException { // throws
-																													// InvalidMoveException
-																													// {
+	public void updateHead(ArrayList<Integer> queenCur, ArrayList<Integer> queenNew, ArrayList<Integer> arrow)
+			throws InvalidMoveException { // throws
+		// InvalidMoveException
+		// {
 		ArrayList<BoardState> nextStates = bsh.returnNewStates();
-		Collections.shuffle(nextStates);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<ADDED CHECK PERF
+		Collections.shuffle(nextStates);// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<ADDED CHECK PERF
 		Move move = new Move(queenCur, queenNew, arrow, false);
 
 		for (BoardState bs : nextStates) {
@@ -331,34 +326,32 @@ public class COSC322Test extends GamePlayer {
 //
 //		System.out.println("MOVE: " + bsh.lastMove.getQueenPos() + bsh.lastMove.getQueenMove()
 //				+ bsh.lastMove.getArrowPos() + " TURN: " + bsh.turn);
-		
 
 	}
 
 	int counter = 0;
-	
+
 	public BoardState minimaxstart(BoardState bs, int depth, int maxdepth) throws InvalidMoveException {
-		//System.out.println(counter++);
+		// System.out.println(counter++);
 		counter++;
-		if(counter%100000 == 0) {
+		if (counter % 100000 == 0) {
 			System.out.println(counter);
 		}
-		if(counter > 20000000 && maxdepth == 3) {
+		if (counter > 10000000 && maxdepth == 3) {
 			throw new InvalidMoveException("lol");
 		}
-		if(counter > 11000000 && maxdepth == 4) {
+		if (counter > 10000000 && maxdepth == 4) {
 			throw new InvalidMoveException("lol");
 		}
-		
+
 		if (depth < 1) {
 			// System.out.println("breakpoint 6");
-			if(bs.turn == 1) {
+			if (bs.turn == 1) {
 				bs.value = -BoardStateEvaluator.evaluateBoard(bs);
-			}
-			else {
+			} else {
 				bs.value = BoardStateEvaluator.evaluateBoard(bs);
 			}
-			
+
 			// System.out.println("breakpoint 7");
 			return bs;
 		}
@@ -374,44 +367,50 @@ public class COSC322Test extends GamePlayer {
 				return bs;
 			}
 		}
-		
-		
+
 		if (nextMoves == null || nextMoves.size() < 1) {
-			if(bs.turn == player) {
+			if (bs.turn == player) {
 				bs.value = -9998;
-			}
-			else {
+			} else {
 				bs.value = 9998;
 			}
-			
+
 			System.out.println("GAME OVER");
 			return bs;
-		} 
+		}
 //		else if(nextMoves.get(0).returnNewStates().size() < 1) {
 //			bs.value = 9999;
 //			return bs;
 //		}
-		
+		AtomicInteger k = new AtomicInteger(-1);
+		nextMoves.parallelStream().forEach(s -> {
+			
+			try {
+				s = nextMoves.get(k.incrementAndGet());
+				s.value = minimax(s, depth - 1, maxdepth, 9999, -9999).value;
+				nextMoves.set(k.get(), s);
+				
+				//System.out.print("H");
+				//System.out.println(s.value);
+				//System.out.println("true value"+s.value+" expected value" + nextMoves);
+			} catch (InvalidMoveException e) {
+				//System.out.print("I");
+				// TODO Auto-generated catch block
+				// e.printStackTrace();
+			}
 
+		});
+		
 		BoardState bbs = null;
 
-		if (depth % 2 != maxdepth%2) {
+		if (depth % 2 != maxdepth % 2) {
 			double minVal = 9999;
-
+			//System.out.println(nextMoves.get(10).value);
 			
-			Collections.synchronizedList(nextMoves).parallelStream().forEach( s -> {
-				
-				try {
-					s.value = minimax(s, depth - 1, maxdepth).value;
-				} catch (InvalidMoveException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-				}
-				
-			});
+			
+
+			//System.out.println("evaluated the list"+nextMoves.get(10).value);
 			for (BoardState board : nextMoves) {
-
-
 
 				if (minVal > board.value) {
 					minVal = board.value;
@@ -422,21 +421,11 @@ public class COSC322Test extends GamePlayer {
 
 		} else {
 			double maxVal = -9999;
+			//System.out.println(nextMoves.get(10).value);
 			
-			Collections.synchronizedList(nextMoves).parallelStream().forEach( s -> {
-				
-				try {
-					s.value = minimax(s, depth - 1, maxdepth).value;
-				} catch (InvalidMoveException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
-				}
-				
-			});
 			
+			//System.out.println("evaluated the list"+nextMoves.get(10).value);
 			for (BoardState board : nextMoves) {
-
-				
 
 				if (maxVal < board.value) {
 					maxVal = board.value;
@@ -455,35 +444,36 @@ public class COSC322Test extends GamePlayer {
 		}
 
 	}
-	
-	public BoardState minimax(BoardState bs, int depth, int maxdepth) throws InvalidMoveException {
-		//System.out.println(counter++);
+
+	public BoardState minimax(BoardState bs, int depth, int maxdepth, double max, double min)
+			throws InvalidMoveException {
+		// System.out.println(counter++);
 		counter++;
-		if(counter%100000 == 0) {
+		if (counter % 100000 == 0) {
 			System.out.println(counter);
 		}
-		if(counter > 20000000 && maxdepth == 3) {
+		if (counter > 10000000 && maxdepth == 3) {
 			throw new InvalidMoveException("lol");
 		}
-		if(counter > 10000000 && maxdepth == 4) {
+		if (counter > 10000000 && maxdepth == 4) {
 			throw new InvalidMoveException("lol");
 		}
-		
+
 		if (depth < 1) {
 			// System.out.println("breakpoint 6");
-			if(bs.turn == 1) {
+			if (bs.turn == 1) {
 				bs.value = -BoardStateEvaluator.evaluateBoard(bs);
-			}
-			else {
+			} else {
 				bs.value = BoardStateEvaluator.evaluateBoard(bs);
 			}
-			
+
 			// System.out.println("breakpoint 7");
 			return bs;
 		}
 
 		// might be empty array, might be null
 		ArrayList<BoardState> nextMoves = bs.returnNewStates();
+		Collections.shuffle(nextMoves);// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<ADDED CHECK PERF
 		if (depth == maxdepth) {
 			if (nextMoves == null || nextMoves.size() < 1) {
 				System.out.println("GAME LOSS");
@@ -493,32 +483,38 @@ public class COSC322Test extends GamePlayer {
 				return bs;
 			}
 		}
-		
-		
+
 		if (nextMoves == null || nextMoves.size() < 1) {
-			if(bs.turn == player) {
+			if (bs.turn == player) {
 				bs.value = -9998;
-			}
-			else {
+			} else {
 				bs.value = 9998;
 			}
-			
+
 			System.out.println("GAME OVER");
 			return bs;
-		} 
+		}
 //		else if(nextMoves.get(0).returnNewStates().size() < 1) {
 //			bs.value = 9999;
 //			return bs;
 //		}
-		
 
 		BoardState bbs = null;
 
-		if (depth % 2 != maxdepth%2) {
+		if (depth % 2 != maxdepth % 2) {
 			double minVal = 9999;
+			double tempmin = 9999;
+
 			for (BoardState board : nextMoves) {
 
-				board.value = minimax(board, depth - 1, maxdepth).value;
+				board.value = minimax(board, depth - 1, maxdepth, max, tempmin).value;
+
+//				if(board.value>max) {
+//					return board;
+//				}
+//				if(board.value<tempmin) {
+//					tempmin = board.value;
+//				}
 
 				if (minVal > board.value) {
 					minVal = board.value;
@@ -529,10 +525,17 @@ public class COSC322Test extends GamePlayer {
 
 		} else {
 			double maxVal = -9999;
+			double tempmax = -9999;
+
 			for (BoardState board : nextMoves) {
 
-				board.value = minimax(board, depth - 1, maxdepth).value;
-
+				board.value = minimax(board, depth - 1, maxdepth, tempmax, min).value;
+//				if(board.value<min) {
+//					return board;
+//				}
+//				if(board.value<tempmax) {
+//					tempmax = board.value;
+//				}
 				if (maxVal < board.value) {
 					maxVal = board.value;
 					bbs = board;
