@@ -6,7 +6,7 @@ public class MoveGenerator {
 
 	//Returns an array containing all the reachable board states
 	//generates board state and checks if each move wins but doesnt evaluate board state
-	public static ArrayList<BoardState> getMoves(BoardState inputBoard){
+	public synchronized static ArrayList<BoardState> getMoves(BoardState inputBoard){
 		if(inputBoard == null) {
 			return null;
 		}
@@ -483,7 +483,7 @@ public class MoveGenerator {
 	}
 	
 	//Takes the board and returns whether the location is valid (valid if 0). Returns false otherwise
-	public static boolean checkValid(int[][] board, int x, int y) {
+	public synchronized static boolean checkValid(int[][] board, int x, int y) {
 		//System.out.println(x + "," + y);
 		if(!(x>board.length-1|| x<0 || y>board[x].length-1 || y<0 || board[x][y]!=0)) {
 			return true;
@@ -492,7 +492,7 @@ public class MoveGenerator {
 	}
 	
 	//Copy Arraylist
-	public static ArrayList<int[]> copyList(ArrayList<int[]> list){
+	public synchronized static ArrayList<int[]> copyList(ArrayList<int[]> list){
 		
 		ArrayList<int[]> al = new ArrayList<int[]>();
 		for (int[] item: list) {
@@ -506,7 +506,7 @@ public class MoveGenerator {
 	}
 	
 	//Make a Board Copy. Use this to prevent bad pointers
-	public static int[][] copyBoard(int[][] toCopy) {
+	public synchronized static int[][] copyBoard(int[][] toCopy) {
 		int[][] newBoard = new int[toCopy.length][toCopy[0].length];
 		
 		for(int i = 0; toCopy.length > i; i++) {
@@ -541,7 +541,7 @@ public class MoveGenerator {
 		printBoard(manual);
 	}
 	
-	public static void printBoard(int[][] board) {
+	public synchronized static void printBoard(int[][] board) {
 		System.out.println("Board:");
 		for(int i = 0;board.length>i;i++) {
 			for(int j = 0;board[0].length>j;j++) {
@@ -550,7 +550,7 @@ public class MoveGenerator {
 			System.out.println();
 		}
 	}
-	public static void printBoard(BoardState board) {
+	public synchronized static void printBoard(BoardState board) {
 		printBoard(board.board);
 	}
 
