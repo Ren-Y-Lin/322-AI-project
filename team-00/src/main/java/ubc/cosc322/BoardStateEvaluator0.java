@@ -35,8 +35,8 @@ public class BoardStateEvaluator0 {
 
 		}
 		
-		System.out.println(""+t1v+" v "+t2v);
-		return t1v - t2v;
+		//System.out.println(""+t1v+" v "+t2v);
+		return t2v-t1v;
 
 	}
 
@@ -87,7 +87,7 @@ public class BoardStateEvaluator0 {
 		
 		////////////////////////////
 		for(int i = 1; i< 10; i++) {
-			if(x+i>9 || y+1>9) {
+			if(x+i>9 || y+i>9) {
 				break;
 			}
 			if(board[x+i][y+i]==0) {
@@ -97,7 +97,7 @@ public class BoardStateEvaluator0 {
 			}
 		}
 		for(int i = 1; i< 10; i++) {
-			if(x+i>9||y-1<0) {
+			if(x+i>9||y-i<0) {
 				break;
 			}
 			if(board[x+i][y-i]==0) {

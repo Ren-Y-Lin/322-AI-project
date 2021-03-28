@@ -210,6 +210,16 @@ public class COSC322Test extends GamePlayer {
 			counter = 0;
 			Collections.shuffle(newStates);/////////// ????????????????????????????????????????????
 			try {
+				if(round<30) {
+					System.out.println("Early Round");
+					System.out.println("MINIMAX: 2");
+					bsh = minimaxstart(bsh, 2, 2);
+				}else if(round<50) {
+					System.out.println("Mid Round");
+					System.out.println("MINIMAX: 3");
+					bsh = minimaxstart(bsh, 2, 2);
+				}else
+				
 				if (newStates.size() > 50 && newStates2.size() > 50) {
 					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
 					System.out.println("MINIMAX: 3");
@@ -340,10 +350,10 @@ public class COSC322Test extends GamePlayer {
 		if (counter % 100000 == 0) {
 			System.out.println(counter);
 		}
-		if (counter > 5000000 && maxdepth == 3) {
+		if (counter > 7000000 && maxdepth == 3) {
 			throw new InvalidMoveException("lol");
 		}
-		if (counter > 5000000 && maxdepth == 4) {
+		if (counter > 7000000 && maxdepth == 4) {
 			throw new InvalidMoveException("lol");
 		}
 
@@ -455,10 +465,10 @@ public class COSC322Test extends GamePlayer {
 		if (counter % 100000 == 0) {
 			System.out.println(counter);
 		}
-		if (counter > 5000000 && maxdepth == 3) {
+		if (counter > 7000000 && maxdepth == 3) {
 			throw new InvalidMoveException("lol");
 		}
-		if (counter > 5000000 && maxdepth == 4) {
+		if (counter > 7000000 && maxdepth == 4) {
 			throw new InvalidMoveException("lol");
 		}
 
@@ -558,9 +568,9 @@ public class COSC322Test extends GamePlayer {
 	}
 	
 	public int evaluateBoardBasedOnTurn(BoardState bs) {
-		if(round < 30) {
+		if(round < 50) {
 			return BoardStateEvaluator0.evaluateBoard(bs);
-		}else if(round < 50) {
+		}else if(round < 60) {
 			return BoardStateEvaluator2.evaluateBoard(bs);
 		}
 		
