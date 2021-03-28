@@ -368,7 +368,7 @@ public class COSC322Test extends GamePlayer {
 		if (depth < 1) {
 			// System.out.println("breakpoint 6");
 			if (bs.turn == 1) {
-				bs.value = evaluateBoardBasedOnTurn(bs);
+				bs.value = -evaluateBoardBasedOnTurn(bs);
 			} else {
 				bs.value = evaluateBoardBasedOnTurn(bs);
 			}
@@ -483,7 +483,7 @@ public class COSC322Test extends GamePlayer {
 		if (depth < 1) {
 			// System.out.println("breakpoint 6");
 			if (bs.turn == 1) {
-				bs.value = evaluateBoardBasedOnTurn(bs);
+				bs.value = -evaluateBoardBasedOnTurn(bs);
 			} else {
 				bs.value = evaluateBoardBasedOnTurn(bs);
 			}
