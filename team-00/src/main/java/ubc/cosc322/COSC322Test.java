@@ -213,29 +213,29 @@ public class COSC322Test extends GamePlayer {
 			Collections.shuffle(newStates);/////////// ????????????????????????????????????????????
 			try {
 
-//				for (int i = 1; i < 15; i++) {
-//					bsh = minimaxstart(bsh, i, i);
-//				}
-
-				if(round<30) {
-					System.out.println("Early Round");
-					System.out.println("MINIMAX: 2");
-					bsh = minimaxstart(bsh, 3, 3);
-				}else if(round<40) {
-					System.out.println("Mid Round");
-					System.out.println("MINIMAX: 3");
-					bsh = minimaxstart(bsh, 4, 4);
-				}else
-				
-				if (newStates.size() > 50 && newStates2.size() > 50) {
-					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
-					System.out.println("MINIMAX: 3");
-					bsh = minimaxstart(bsh, 3, 3);
-				} else {
-					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
-					System.out.println("MINIMAX: 4");
-					bsh = minimaxstart(bsh, 4, 4);
+				for (int i = 1; i < 15; i++) {
+					bsh = minimaxstart(bsh, i, i);
 				}
+
+//				if(round<30) {
+//					System.out.println("Early Round");
+//					System.out.println("MINIMAX: 2");
+//					bsh = minimaxstart(bsh, 3, 3);
+//				}else if(round<40) {
+//					System.out.println("Mid Round");
+//					System.out.println("MINIMAX: 3");
+//					bsh = minimaxstart(bsh, 4, 4);
+//				}else
+//				
+//				if (newStates.size() > 50 && newStates2.size() > 50) {
+//					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
+//					System.out.println("MINIMAX: 3");
+//					bsh = minimaxstart(bsh, 3, 3);
+//				} else {
+//					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
+//					System.out.println("MINIMAX: 4");
+//					bsh = minimaxstart(bsh, 4, 4);
+//				}
 
 			} catch (InvalidMoveException e) {
 
