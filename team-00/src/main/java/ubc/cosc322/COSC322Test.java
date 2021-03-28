@@ -215,6 +215,7 @@ public class COSC322Test extends GamePlayer {
 
 				for (int i = 1; i < 15; i++) {
 					bsh = minimaxstart(bsh, i, i);
+					System.out.println("Depth Iteration"+i);
 				}
 
 //				if(round<30) {
