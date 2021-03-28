@@ -28,9 +28,20 @@ public class BoardStateEvaluator0 {
 
 		for (int i = 0; i < 8; i++) {
 			if (i < 4) {
-				t1v +=  evaluateBoard(queen1pos[i][0], queen1pos[i][1], MoveGenerator.copyBoard(b.board));
+				int val =evaluateBoard(queen1pos[i][0], queen1pos[i][1], MoveGenerator.copyBoard(b.board));
+				if(val > 0) {
+					t1v +=val;
+				}else {
+					t1v-=20;
+				}
+				  
 			} else {
-				t2v +=  evaluateBoard(queen2pos[i-4][0], queen2pos[i-4][1], MoveGenerator.copyBoard(b.board));
+				int val =evaluateBoard(queen2pos[i-4][0], queen2pos[i-4][1], MoveGenerator.copyBoard(b.board));
+				if(val > 0) {
+					t1v +=val;
+				}else {
+					t1v-=20;
+				}
 			}
 
 		}

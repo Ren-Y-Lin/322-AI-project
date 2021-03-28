@@ -24,6 +24,7 @@ public class COSC322Test extends GamePlayer {
 	private BaseGameGUI gamegui = null;
 	private int round = 0;
 	public static long timeStart = System.currentTimeMillis();
+	private boolean caution;
 
 	private String userName = "Username";
 	private String passwd = "Password";
@@ -159,6 +160,7 @@ public class COSC322Test extends GamePlayer {
 			//
 			timeStart = System.currentTimeMillis();
 			round += 2;
+			caution = false;
 			System.out.println("GAME ACTION MOVE");
 			// gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
 			gamegui.updateGameState(msgDetails);
@@ -214,9 +216,14 @@ public class COSC322Test extends GamePlayer {
 			try {
 
 				for (int i = 1; i < 15; i++) {
-					if (System.currentTimeMillis() - timeStart < 1000) {
+//					if (System.currentTimeMillis() - timeStart < 500) {
+						counter = 0;
 						bsh = minimaxstart(bsh, i, i);
-					}
+//					}else {
+//						caution = true;
+//						bsh = minimaxstart(bsh, i, i);
+//						break;
+//					}
 					System.out.println("Depth Iteration"+i);
 				}
 
@@ -360,6 +367,9 @@ public class COSC322Test extends GamePlayer {
 		if (counter % 100000 == 0) {
 			System.out.println(counter);
 		}
+		if(counter > 8000000) {
+			throw new InvalidMoveException("lol");
+		}
 //		if (counter > 7000000 && maxdepth == 3) {
 //			throw new InvalidMoveException("lol");
 //		}
@@ -473,6 +483,10 @@ public class COSC322Test extends GamePlayer {
 		counter++;
 		if (counter % 100000 == 0) {
 			System.out.println(counter);
+		}
+		
+		if(counter > 8000000) {
+			throw new InvalidMoveException("lol");
 		}
 //		if (counter > 7000000 && maxdepth == 3) {
 //		throw new InvalidMoveException("lol");
