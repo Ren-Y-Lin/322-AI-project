@@ -516,9 +516,9 @@ public class COSC322Test extends GamePlayer {
 		if (depth == maxdepth) {
 			if (nextMoves == null || nextMoves.size() < 1) {
 				System.out.println("GAME LOSS");
-				Move move = bs.lastMove.sendFormat();
-				gameClient.sendMoveMessage(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
-				gamegui.updateGameState(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
+				//Move move = bs.lastMove.sendFormat();
+				//gameClient.sendMoveMessage(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
+				//gamegui.updateGameState(move.getQueenPos(), move.getQueenMove(), move.getArrowPos());
 				return bs;
 			}
 		}
@@ -530,7 +530,7 @@ public class COSC322Test extends GamePlayer {
 				bs.value = 9998;
 			}
 
-			System.out.println("GAME OVER");
+			//System.out.println("GAME OVER");
 			return bs;
 		}
 //		else if(nextMoves.get(0).returnNewStates().size() < 1) {
