@@ -223,11 +223,11 @@ public class COSC322Test extends GamePlayer {
 			} catch (InvalidMoveException e) {
 
 				for (int i = 0; i < newStates.size(); i++) {
-					if (BoardStateEvaluator2.evaluateBoard(newStates.get(i)) > max) {
-						max = BoardStateEvaluator2.evaluateBoard(newStates.get(i));
+					if (evaluateBoardBasedOnTurn(newStates.get(i)) > max) {
+						max = evaluateBoardBasedOnTurn(newStates.get(i));
 						bbs = newStates.get(i);
-					} else if (BoardStateEvaluator2.evaluateBoard(newStates.get(i)) < min) {
-						min = BoardStateEvaluator2.evaluateBoard(newStates.get(i));
+					} else if (evaluateBoardBasedOnTurn(newStates.get(i)) < min) {
+						min = evaluateBoardBasedOnTurn(newStates.get(i));
 						wbs = newStates.get(i);
 					}
 				}
@@ -350,9 +350,9 @@ public class COSC322Test extends GamePlayer {
 		if (depth < 1) {
 			// System.out.println("breakpoint 6");
 			if (bs.turn == 1) {
-				bs.value = -BoardStateEvaluator2.evaluateBoard(bs);
+				bs.value = -evaluateBoardBasedOnTurn(bs);
 			} else {
-				bs.value = BoardStateEvaluator2.evaluateBoard(bs);
+				bs.value = evaluateBoardBasedOnTurn(bs);
 			}
 
 			// System.out.println("breakpoint 7");
@@ -465,9 +465,9 @@ public class COSC322Test extends GamePlayer {
 		if (depth < 1) {
 			// System.out.println("breakpoint 6");
 			if (bs.turn == 1) {
-				bs.value = -BoardStateEvaluator2.evaluateBoard(bs);
+				bs.value = -evaluateBoardBasedOnTurn(bs);
 			} else {
-				bs.value = BoardStateEvaluator2.evaluateBoard(bs);
+				bs.value = evaluateBoardBasedOnTurn(bs);
 			}
 
 			// System.out.println("breakpoint 7");
@@ -555,6 +555,17 @@ public class COSC322Test extends GamePlayer {
 			return bs;
 		}
 
+	}
+	
+	public int evaluateBoardBasedOnTurn(BoardState bs) {
+		if(round < 30) {
+			return BoardStateEvaluator0.evaluateBoard(bs);
+		}else if(round < 50) {
+			return BoardStateEvaluator2.evaluateBoard(bs);
+		}
+		
+		return BoardStateEvaluator3.evaluateBoard(bs);
+		
 	}
 
 }// end of class

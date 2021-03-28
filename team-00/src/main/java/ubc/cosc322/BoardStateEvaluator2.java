@@ -10,7 +10,9 @@ public class BoardStateEvaluator2 {
 		int t1v = 0;
 		int t2v = 0;
 
-		for (int i = 0; i < 10; i++) {
+		queen1pos = b.queenPos1.toArray(queen1pos);
+		queen2pos = b.queenPos2.toArray(queen2pos);
+		/*for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 
 				if (board[i][j] == 1) {
@@ -23,7 +25,7 @@ public class BoardStateEvaluator2 {
 
 			}
 
-		}
+		}*/
 
 		for (int i = 0; i < 4; i++) {
 			t1v += accessibleBlocks(queen1pos[i][0], queen1pos[i][1], MoveGenerator.copyBoard(b.board));
