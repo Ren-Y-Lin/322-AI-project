@@ -6,7 +6,7 @@ public class MoveGenerator {
 
 	//Returns an array containing all the reachable board states
 	//generates board state and checks if each move wins but doesnt evaluate board state
-	public static ArrayList<BoardState> getMoves(BoardState inputBoard){
+	public ArrayList<BoardState> getMoves(BoardState inputBoard){
 		if(inputBoard == null) {
 			return null;
 		}

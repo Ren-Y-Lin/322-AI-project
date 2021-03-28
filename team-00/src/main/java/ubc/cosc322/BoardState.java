@@ -10,7 +10,7 @@ public class BoardState implements java.io.Serializable {
 
 	// board state
 	int[][] board;
-
+	MoveGenerator mg = new MoveGenerator();
 	
 	//queen position for the two colors
 	public ArrayList<int[]>queenPos1 = new ArrayList<int[]>();
@@ -61,7 +61,7 @@ public class BoardState implements java.io.Serializable {
 		
 
 		if (nextStates == null) {
-			nextStates = MoveGenerator.getMoves(this);
+			nextStates = mg.getMoves(this);
 			
 			if(nextStates ==null) {
 				return null;
@@ -95,7 +95,7 @@ public class BoardState implements java.io.Serializable {
 //			nextStates = MoveGenerator.getMoves(this);
 //		}
 		
-		return MoveGenerator.getMoves(this);
+		return mg.getMoves(this);
 		
 		
 	}
