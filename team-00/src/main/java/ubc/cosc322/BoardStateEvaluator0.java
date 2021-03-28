@@ -32,7 +32,7 @@ public class BoardStateEvaluator0 {
 				if(val > 0) {
 					t1v +=val;
 				}else {
-					t1v-=20;
+					t1v-=10;
 				}
 				  
 			} else {
@@ -40,7 +40,7 @@ public class BoardStateEvaluator0 {
 				if(val > 0) {
 					t1v +=val;
 				}else {
-					t1v-=20;
+					t1v-=10;
 				}
 			}
 

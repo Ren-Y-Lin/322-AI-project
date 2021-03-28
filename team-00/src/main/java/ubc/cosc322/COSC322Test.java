@@ -601,13 +601,13 @@ public class COSC322Test extends GamePlayer {
 	}
 
 	public int evaluateBoardBasedOnTurn(BoardState bs) {
-		if (round < 30) {
+		if (round < 35) {
 			return BoardStateEvaluator0.evaluateBoard(bs);
 		} else if (round < 50) {
-			return BoardStateEvaluator2.evaluateBoard(bs);
+			return BoardStateEvaluator.evaluateBoard(bs);
 		}
 
-		return BoardStateEvaluator3.evaluateBoard(bs);
+		return BoardStateEvaluator.evaluateBoard(bs);
 
 	}
 
