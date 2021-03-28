@@ -214,7 +214,7 @@ public class COSC322Test extends GamePlayer {
 					System.out.println("Early Round");
 					System.out.println("MINIMAX: 2");
 					bsh = minimaxstart(bsh, 2, 2);
-				}else if(round<50) {
+				}else if(round<40) {
 					System.out.println("Mid Round");
 					System.out.println("MINIMAX: 3");
 					bsh = minimaxstart(bsh, 2, 2);
@@ -568,9 +568,9 @@ public class COSC322Test extends GamePlayer {
 	}
 	
 	public int evaluateBoardBasedOnTurn(BoardState bs) {
-		if(round < 50) {
+		if(round < 30) {
 			return BoardStateEvaluator0.evaluateBoard(bs);
-		}else if(round < 60) {
+		}else if(round < 50) {
 			return BoardStateEvaluator2.evaluateBoard(bs);
 		}
 		
