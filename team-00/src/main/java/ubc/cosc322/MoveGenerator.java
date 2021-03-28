@@ -529,9 +529,9 @@ public class MoveGenerator {
                 { 0, 0, 0, 0, 0, 3, 0, 0, 3, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
 		
 		tester.board = manual;
-		MoveGenerator mg = new MoveGenerator();
 		
-		ArrayList<BoardState> moves = mg.getMoves(tester);
+		
+		ArrayList<BoardState> moves = MoveGenerator.getMoves(tester);
 		
 		for(int i = 0; i< moves.size(); i++) {
 			printBoard(moves.get(i).board);
