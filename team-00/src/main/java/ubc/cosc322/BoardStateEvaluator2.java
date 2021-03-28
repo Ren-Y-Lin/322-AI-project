@@ -2,7 +2,7 @@ package ubc.cosc322;
 
 public class BoardStateEvaluator2 {
 	public static int evaluateBoard(BoardState b) {
-		int[][] board = MoveGenerator.copyBoard(b.board);
+		int[][] board = copyBoard(b.board);
 		int[][] queen1pos = new int[4][2];
 		int q1c = 0;
 		int[][] queen2pos = new int[4][2];
@@ -28,8 +28,8 @@ public class BoardStateEvaluator2 {
 		}*/
 
 		for (int i = 0; i < 4; i++) {
-			t1v += accessibleBlocks(queen1pos[i][0], queen1pos[i][1], MoveGenerator.copyBoard(b.board));
-			t2v += accessibleBlocks(queen2pos[i][0], queen2pos[i][1], MoveGenerator.copyBoard(b.board));
+			t1v += accessibleBlocks(queen1pos[i][0], queen1pos[i][1], copyBoard(b.board));
+			t2v += accessibleBlocks(queen2pos[i][0], queen2pos[i][1], copyBoard(b.board));
 		}
 		//System.out.println(""+t1v+" v "+t1v);
 		return t1v-t2v;
@@ -109,6 +109,17 @@ public class BoardStateEvaluator2 {
 	public static void main(String[] args) {
 		BoardStateHead bsh = new BoardStateHead();
 		System.out.println(evaluateBoard(bsh));
+	}
+	
+	public static int[][] copyBoard(int[][] toCopy) {
+		int[][] newBoard = new int[toCopy.length][toCopy[0].length];
+		
+		for(int i = 0; toCopy.length > i; i++) {
+			for (int j = 0; toCopy.length > j; j++) {
+				newBoard[i][j] = toCopy[i][j];
+			}
+		}
+		return newBoard;
 	}
 
 

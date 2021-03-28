@@ -11,7 +11,7 @@ public class BoardStateEvaluator {
 		//Need: how many empty squares each side has access to
 		
 		//board = copy of original board to work on. int[x][y]. x = up/down. y = left/right
-		int[][] board = MoveGenerator.copyBoard(b.board);
+		int[][] board = copyBoard(b.board);
 		
 		/*
 		//Testing Code Start 
@@ -195,6 +195,17 @@ public class BoardStateEvaluator {
 			return true;
 		}
 		else return false;
+	}
+	
+	public static int[][] copyBoard(int[][] toCopy) {
+		int[][] newBoard = new int[toCopy.length][toCopy[0].length];
+		
+		for(int i = 0; toCopy.length > i; i++) {
+			for (int j = 0; toCopy.length > j; j++) {
+				newBoard[i][j] = toCopy[i][j];
+			}
+		}
+		return newBoard;
 	}
 
 }
