@@ -157,6 +157,7 @@ public class COSC322Test extends GamePlayer {
 
 		if (messageType.equals(GameMessage.GAME_ACTION_MOVE)) {
 			//
+			timeStart = System.currentTimeMillis();
 			round += 2;
 			System.out.println("GAME ACTION MOVE");
 			// gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
@@ -219,11 +220,11 @@ public class COSC322Test extends GamePlayer {
 				if(round<30) {
 					System.out.println("Early Round");
 					System.out.println("MINIMAX: 2");
-					bsh = minimaxstart(bsh, 2, 2);
+					bsh = minimaxstart(bsh, 3, 3);
 				}else if(round<40) {
 					System.out.println("Mid Round");
 					System.out.println("MINIMAX: 3");
-					bsh = minimaxstart(bsh, 3, 3);
+					bsh = minimaxstart(bsh, 4, 4);
 				}else
 				
 				if (newStates.size() > 50 && newStates2.size() > 50) {
