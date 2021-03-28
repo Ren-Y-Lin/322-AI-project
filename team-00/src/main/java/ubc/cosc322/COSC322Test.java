@@ -212,13 +212,20 @@ public class COSC322Test extends GamePlayer {
 //			}
 
 			counter = 0;
+			BoardState temp=bsh;
 			Collections.shuffle(newStates);/////////// ????????????????????????????????????????????
 			try {
 
 				for (int i = 1; i < 15; i++) {
 //					if (System.currentTimeMillis() - timeStart < 500) {
 						counter = 0;
-						bsh = minimaxstart(bsh, i, i);
+						temp = bsh;
+						if(round<35){
+							bsh = minimaxstart(bsh, i, i);
+						}else {
+							bsh = minimax(bsh, i, i, i, i);
+						}
+						
 //					}else {
 //						caution = true;
 //						bsh = minimaxstart(bsh, i, i);
@@ -249,21 +256,21 @@ public class COSC322Test extends GamePlayer {
 
 			} catch (InvalidMoveException e) {
 
-				for (int i = 0; i < newStates.size(); i++) {
-					if (evaluateBoardBasedOnTurn(newStates.get(i)) > max) {
-						max = evaluateBoardBasedOnTurn(newStates.get(i));
-						bbs = newStates.get(i);
-					} else if (evaluateBoardBasedOnTurn(newStates.get(i)) < min) {
-						min = evaluateBoardBasedOnTurn(newStates.get(i));
-						wbs = newStates.get(i);
-					}
-				}
-				BoardState temp;
-				if (player == 1) {
-					temp = bbs;
-				} else {
-					temp = wbs;
-				}
+//				for (int i = 0; i < newStates.size(); i++) {
+//					if (evaluateBoardBasedOnTurn(newStates.get(i)) > max) {
+//						max = evaluateBoardBasedOnTurn(newStates.get(i));
+//						bbs = newStates.get(i);
+//					} else if (evaluateBoardBasedOnTurn(newStates.get(i)) < min) {
+//						min = evaluateBoardBasedOnTurn(newStates.get(i));
+//						wbs = newStates.get(i);
+//					}
+//				}
+//				
+//				if (player == 1) {
+//					temp = bbs;
+//				} else {
+//					temp = wbs;
+//				}
 				bsh = temp;
 
 			}
@@ -331,7 +338,7 @@ public class COSC322Test extends GamePlayer {
 		// InvalidMoveException
 		// {
 		ArrayList<BoardState> nextStates = bsh.returnNewStates();
-		Collections.shuffle(nextStates);// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<ADDED CHECK PERF
+		//Collections.shuffle(nextStates);// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<CHECK PERF
 		Move move = new Move(queenCur, queenNew, arrow, false);
 
 		for (BoardState bs : nextStates) {
@@ -594,7 +601,7 @@ public class COSC322Test extends GamePlayer {
 	}
 
 	public int evaluateBoardBasedOnTurn(BoardState bs) {
-		if (round < 25) {
+		if (round < 30) {
 			return BoardStateEvaluator0.evaluateBoard(bs);
 		} else if (round < 50) {
 			return BoardStateEvaluator2.evaluateBoard(bs);
