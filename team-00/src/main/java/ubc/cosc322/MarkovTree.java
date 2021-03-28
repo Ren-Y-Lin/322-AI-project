@@ -131,11 +131,11 @@ public class MarkovTree {
 		boolean moveExist = false;
 
 		for (BoardState bs : nextStates) {
-			if (bs.isLastMoveEqual(move)) {
-				currentBoard = bs;
-				moveExist = true;
+			//if (bs.isLastMoveEqual(move)) {
+			//	currentBoard = bs;
+			//	moveExist = true;
 
-			}
+			//}
 		}
 		if (!moveExist) {
 			throw new InvalidMoveException("No Valid Next Move");
