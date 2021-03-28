@@ -36,7 +36,7 @@ public class BoardStateEvaluator0 {
 		}
 		
 		//System.out.println(""+t1v+" v "+t2v);
-		return t2v-t1v;
+		return t1v-t2v;
 
 	}
 

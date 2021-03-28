@@ -23,7 +23,7 @@ public class COSC322Test extends GamePlayer {
 	private GameClient gameClient = null;
 	private BaseGameGUI gamegui = null;
 	private int round = 0;
-	
+	public static long timeStart = System.currentTimeMillis();
 
 	private String userName = "Username";
 	private String passwd = "Password";
@@ -142,6 +142,7 @@ public class COSC322Test extends GamePlayer {
 		}
 		// System.out.println("YOUR MESSAGE: " + messageType);
 		if (messageType.equals(GameMessage.GAME_STATE_BOARD)) {
+			timeStart = System.currentTimeMillis();
 			System.out.println("GAME STATE BOARD");
 			gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
 			bsh = new BoardStateHead();
@@ -156,7 +157,7 @@ public class COSC322Test extends GamePlayer {
 
 		if (messageType.equals(GameMessage.GAME_ACTION_MOVE)) {
 			//
-			round+=2;
+			round += 2;
 			System.out.println("GAME ACTION MOVE");
 			// gamegui.setGameState((ArrayList<Integer>) msgDetails.get("game-state"));
 			gamegui.updateGameState(msgDetails);
@@ -210,25 +211,30 @@ public class COSC322Test extends GamePlayer {
 			counter = 0;
 			Collections.shuffle(newStates);/////////// ????????????????????????????????????????????
 			try {
-				if(round<30) {
-					System.out.println("Early Round");
-					System.out.println("MINIMAX: 2");
-					bsh = minimaxstart(bsh, 2, 2);
-				}else if(round<40) {
-					System.out.println("Mid Round");
-					System.out.println("MINIMAX: 3");
-					bsh = minimaxstart(bsh, 2, 2);
-				}else
-				
-				if (newStates.size() > 50 && newStates2.size() > 50) {
-					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
-					System.out.println("MINIMAX: 3");
-					bsh = minimaxstart(bsh, 3, 3);
-				} else {
-					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
-					System.out.println("MINIMAX: 4");
-					bsh = minimaxstart(bsh, 4, 4);
+
+				for (int i = 1; i < 15; i++) {
+					bsh = minimaxstart(bsh, i, i);
 				}
+
+//				if(round<30) {
+//					System.out.println("Early Round");
+//					System.out.println("MINIMAX: 2");
+//					bsh = minimaxstart(bsh, 2, 2);
+//				}else if(round<40) {
+//					System.out.println("Mid Round");
+//					System.out.println("MINIMAX: 3");
+//					bsh = minimaxstart(bsh, 2, 2);
+//				}else
+//				
+//				if (newStates.size() > 50 && newStates2.size() > 50) {
+//					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
+//					System.out.println("MINIMAX: 3");
+//					bsh = minimaxstart(bsh, 3, 3);
+//				} else {
+//					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
+//					System.out.println("MINIMAX: 4");
+//					bsh = minimaxstart(bsh, 4, 4);
+//				}
 
 			} catch (InvalidMoveException e) {
 
@@ -350,17 +356,19 @@ public class COSC322Test extends GamePlayer {
 		if (counter % 100000 == 0) {
 			System.out.println(counter);
 		}
-		if (counter > 7000000 && maxdepth == 3) {
+//		if (counter > 7000000 && maxdepth == 3) {
+//			throw new InvalidMoveException("lol");
+//		}
+//		if (counter > 7000000 && maxdepth == 4) {
+//			throw new InvalidMoveException("lol");
+//		}
+		if (System.currentTimeMillis() - timeStart > 10000) {
 			throw new InvalidMoveException("lol");
 		}
-		if (counter > 7000000 && maxdepth == 4) {
-			throw new InvalidMoveException("lol");
-		}
-
 		if (depth < 1) {
 			// System.out.println("breakpoint 6");
 			if (bs.turn == 1) {
-				bs.value = -evaluateBoardBasedOnTurn(bs);
+				bs.value = evaluateBoardBasedOnTurn(bs);
 			} else {
 				bs.value = evaluateBoardBasedOnTurn(bs);
 			}
@@ -397,32 +405,30 @@ public class COSC322Test extends GamePlayer {
 //		}
 		AtomicInteger k = new AtomicInteger(-1);
 		nextMoves.parallelStream().forEach(s -> {
-			
+
 			try {
 				s = nextMoves.get(k.incrementAndGet());
 				s.value = minimax(s, depth - 1, maxdepth, 9999, -9999).value;
 				nextMoves.set(k.get(), s);
-				
-				//System.out.print("H");
-				//System.out.println(s.value);
-				//System.out.println("true value"+s.value+" expected value" + nextMoves);
+
+				// System.out.print("H");
+				// System.out.println(s.value);
+				// System.out.println("true value"+s.value+" expected value" + nextMoves);
 			} catch (InvalidMoveException e) {
-				//System.out.print("I");
+				// System.out.print("I");
 				// TODO Auto-generated catch block
 				// e.printStackTrace();
 			}
 
 		});
-		
+
 		BoardState bbs = null;
 
 		if (depth % 2 != maxdepth % 2) {
 			double minVal = 9999;
-			//System.out.println(nextMoves.get(10).value);
-			
-			
+			// System.out.println(nextMoves.get(10).value);
 
-			//System.out.println("evaluated the list"+nextMoves.get(10).value);
+			// System.out.println("evaluated the list"+nextMoves.get(10).value);
 			for (BoardState board : nextMoves) {
 
 				if (minVal > board.value) {
@@ -434,10 +440,9 @@ public class COSC322Test extends GamePlayer {
 
 		} else {
 			double maxVal = -9999;
-			//System.out.println(nextMoves.get(10).value);
-			
-			
-			//System.out.println("evaluated the list"+nextMoves.get(10).value);
+			// System.out.println(nextMoves.get(10).value);
+
+			// System.out.println("evaluated the list"+nextMoves.get(10).value);
 			for (BoardState board : nextMoves) {
 
 				if (maxVal < board.value) {
@@ -465,17 +470,20 @@ public class COSC322Test extends GamePlayer {
 		if (counter % 100000 == 0) {
 			System.out.println(counter);
 		}
-		if (counter > 7000000 && maxdepth == 3) {
-			throw new InvalidMoveException("lol");
-		}
-		if (counter > 7000000 && maxdepth == 4) {
+//		if (counter > 7000000 && maxdepth == 3) {
+//		throw new InvalidMoveException("lol");
+//	}
+//	if (counter > 7000000 && maxdepth == 4) {
+//		throw new InvalidMoveException("lol");
+//	}
+		if (System.currentTimeMillis() - timeStart > 10000) {
 			throw new InvalidMoveException("lol");
 		}
 
 		if (depth < 1) {
 			// System.out.println("breakpoint 6");
 			if (bs.turn == 1) {
-				bs.value = -evaluateBoardBasedOnTurn(bs);
+				bs.value = evaluateBoardBasedOnTurn(bs);
 			} else {
 				bs.value = evaluateBoardBasedOnTurn(bs);
 			}
@@ -566,16 +574,16 @@ public class COSC322Test extends GamePlayer {
 		}
 
 	}
-	
+
 	public int evaluateBoardBasedOnTurn(BoardState bs) {
-		if(round < 30) {
+		if (round < 25) {
 			return BoardStateEvaluator0.evaluateBoard(bs);
-		}else if(round < 50) {
+		} else if (round < 50) {
 			return BoardStateEvaluator2.evaluateBoard(bs);
 		}
-		
+
 		return BoardStateEvaluator3.evaluateBoard(bs);
-		
+
 	}
 
 }// end of class
