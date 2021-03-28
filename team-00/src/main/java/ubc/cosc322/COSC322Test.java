@@ -214,7 +214,9 @@ public class COSC322Test extends GamePlayer {
 			try {
 
 				for (int i = 1; i < 15; i++) {
-					bsh = minimaxstart(bsh, i, i);
+					if (System.currentTimeMillis() - timeStart < 1000) {
+						bsh = minimaxstart(bsh, i, i);
+					}
 					System.out.println("Depth Iteration"+i);
 				}
 
@@ -478,9 +480,9 @@ public class COSC322Test extends GamePlayer {
 //	if (counter > 7000000 && maxdepth == 4) {
 //		throw new InvalidMoveException("lol");
 //	}
-		if (System.currentTimeMillis() - timeStart > 10000) {
-			throw new InvalidMoveException("lol");
-		}
+//		if (System.currentTimeMillis() - timeStart > 10000) {
+//			throw new InvalidMoveException("lol");
+//		}
 
 		if (depth < 1) {
 			// System.out.println("breakpoint 6");
