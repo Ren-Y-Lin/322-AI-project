@@ -25,7 +25,7 @@ public class COSC322Test extends GamePlayer {
 	private int round = 0;
 	
 
-	private String userName = "Username";
+	private String userName = "Username2";
 	private String passwd = "Password";
 	BoardState bsh = new BoardStateHead();
 	int player = -1;
@@ -210,27 +210,45 @@ public class COSC322Test extends GamePlayer {
 			counter = 0;
 			Collections.shuffle(newStates);/////////// ????????????????????????????????????????????
 			try {
-				if (newStates.size() > 50 && newStates2.size() > 50) {
+				if(round<20) {
 					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
 					System.out.println("MINIMAX: 3");
 					bsh = minimaxstart(bsh, 3, 3);
+				}else
+				if (newStates.size() > 50 && newStates2.size() > 50) {
+					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
+					System.out.println("MINIMAX: 3");
+					bsh = minimax(bsh, 3, 3, min, min);
 				} else {
 					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
 					System.out.println("MINIMAX: 4");
-					bsh = minimaxstart(bsh, 4, 4);
+					bsh = minimax(bsh, 4, 4, min, min);
 				}
 
 			} catch (InvalidMoveException e) {
 
-				for (int i = 0; i < newStates.size(); i++) {
-					if (BoardStateEvaluator2.evaluateBoard(newStates.get(i)) > max) {
-						max = BoardStateEvaluator2.evaluateBoard(newStates.get(i));
-						bbs = newStates.get(i);
-					} else if (BoardStateEvaluator2.evaluateBoard(newStates.get(i)) < min) {
-						min = BoardStateEvaluator2.evaluateBoard(newStates.get(i));
-						wbs = newStates.get(i);
+				if(round<20) {
+					for (int i = 0; i < newStates.size(); i++) {
+						if (BoardStateEvaluator0.evaluateBoard(newStates.get(i)) > max) {
+							max = BoardStateEvaluator0.evaluateBoard(newStates.get(i));
+							bbs = newStates.get(i);
+						} else if (BoardStateEvaluator0.evaluateBoard(newStates.get(i)) < min) {
+							min = BoardStateEvaluator0.evaluateBoard(newStates.get(i));
+							wbs = newStates.get(i);
+						}
+					}
+				}else {
+					for (int i = 0; i < newStates.size(); i++) {
+						if (BoardStateEvaluator.evaluateBoard(newStates.get(i)) > max) {
+							max = BoardStateEvaluator.evaluateBoard(newStates.get(i));
+							bbs = newStates.get(i);
+						} else if (BoardStateEvaluator.evaluateBoard(newStates.get(i)) < min) {
+							min = BoardStateEvaluator.evaluateBoard(newStates.get(i));
+							wbs = newStates.get(i);
+						}
 					}
 				}
+				
 				BoardState temp;
 				if (player == 1) {
 					temp = bbs;
@@ -350,9 +368,18 @@ public class COSC322Test extends GamePlayer {
 		if (depth < 1) {
 			// System.out.println("breakpoint 6");
 			if (bs.turn == 1) {
-				bs.value = -BoardStateEvaluator2.evaluateBoard(bs);
+				if(round<20) {
+					bs.value = -BoardStateEvaluator0.evaluateBoard(bs);
+				}else {
+					bs.value = -BoardStateEvaluator.evaluateBoard(bs);
+				}
+				
 			} else {
-				bs.value = BoardStateEvaluator2.evaluateBoard(bs);
+				if(round<20) {
+					bs.value = BoardStateEvaluator0.evaluateBoard(bs);
+				}else {
+					bs.value = BoardStateEvaluator.evaluateBoard(bs);
+				}
 			}
 
 			// System.out.println("breakpoint 7");
@@ -465,9 +492,18 @@ public class COSC322Test extends GamePlayer {
 		if (depth < 1) {
 			// System.out.println("breakpoint 6");
 			if (bs.turn == 1) {
-				bs.value = -BoardStateEvaluator2.evaluateBoard(bs);
+				if(round<20) {
+					bs.value = -BoardStateEvaluator0.evaluateBoard(bs);
+				}else {
+					bs.value = -BoardStateEvaluator.evaluateBoard(bs);
+				}
+				
 			} else {
-				bs.value = BoardStateEvaluator2.evaluateBoard(bs);
+				if(round<20) {
+					bs.value = BoardStateEvaluator0.evaluateBoard(bs);
+				}else {
+					bs.value = BoardStateEvaluator.evaluateBoard(bs);
+				}
 			}
 
 			// System.out.println("breakpoint 7");
