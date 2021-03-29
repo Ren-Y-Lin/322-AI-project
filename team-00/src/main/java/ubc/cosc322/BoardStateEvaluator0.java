@@ -38,15 +38,15 @@ public class BoardStateEvaluator0 {
 			} else {
 				int val =evaluateBoard(queen2pos[i-4][0], queen2pos[i-4][1], copyBoard(b.board));
 				if(val > 0) {
-					t1v +=val;
+					t2v +=val;
 				}else {
-					t1v-=10;
+					t2v-=10;
 				}
 			}
 
 		}
 		
-		//System.out.println(""+t1v+" v "+t2v);
+		System.out.println(""+t1v+" v "+t2v);
 		return t1v-t2v;
 
 	}

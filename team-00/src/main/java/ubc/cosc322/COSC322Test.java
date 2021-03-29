@@ -213,17 +213,18 @@ public class COSC322Test extends GamePlayer {
 
 			counter = 0;
 			BoardState temp=bsh;
+			BoardState realTemp=temp;
 			Collections.shuffle(newStates);/////////// ????????????????????????????????????????????
 			try {
 
 				for (int i = 1; i < 15; i++) {
 //					if (System.currentTimeMillis() - timeStart < 500) {
 						counter = 0;
-						temp = bsh;
+						realTemp=temp;
 						if(round<35){
-							bsh = minimaxstart(bsh, i, i);
+							temp = minimaxstart(bsh, i, i);
 						}else {
-							bsh = minimax(bsh, i, i, i, i);
+							temp = minimax(bsh, i, i, i, i);
 						}
 						
 //					}else {
@@ -271,7 +272,7 @@ public class COSC322Test extends GamePlayer {
 //				} else {
 //					temp = wbs;
 //				}
-				bsh = temp;
+				bsh = realTemp;
 
 			}
 
