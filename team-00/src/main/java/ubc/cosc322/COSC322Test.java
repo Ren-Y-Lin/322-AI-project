@@ -374,7 +374,7 @@ public class COSC322Test extends GamePlayer {
 		if (counter % 100000 == 0) {
 			System.out.println(counter);
 		}
-		if(counter > 8000000) {
+		if(counter > 7000000) {
 			throw new InvalidMoveException("lol");
 		}
 //		if (counter > 7000000 && maxdepth == 3) {
@@ -492,7 +492,7 @@ public class COSC322Test extends GamePlayer {
 			System.out.println(counter);
 		}
 		
-		if(counter > 8000000) {
+		if(counter > 7000000) {
 			throw new InvalidMoveException("lol");
 		}
 //		if (counter > 7000000 && maxdepth == 3) {
