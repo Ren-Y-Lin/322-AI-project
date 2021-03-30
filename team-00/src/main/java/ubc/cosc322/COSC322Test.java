@@ -187,11 +187,11 @@ public class COSC322Test extends GamePlayer {
 
 //			if (newStates.size() > 250 ) {
 //				for (int i = 0; i < newStates.size(); i++) {
-//					if (BoardStateEvaluator.evaluateBoard(newStates.get(i)) >= max) {
-//						max = BoardStateEvaluator.evaluateBoard(newStates.get(i));
+//					if (BoardStateEvaluator2.evaluateBoard(newStates.get(i)) >= max) {
+//						max = BoardStateEvaluator2.evaluateBoard(newStates.get(i));
 //						bbs = newStates.get(i);
-//					} else if (BoardStateEvaluator.evaluateBoard(newStates.get(i)) <= min) {
-//						min = BoardStateEvaluator.evaluateBoard(newStates.get(i));
+//					} else if (BoardStateEvaluator2.evaluateBoard(newStates.get(i)) <= min) {
+//						min = BoardStateEvaluator2.evaluateBoard(newStates.get(i));
 //						wbs = newStates.get(i);
 //					}
 //				}
@@ -222,11 +222,11 @@ public class COSC322Test extends GamePlayer {
 			}catch (InvalidMoveException e) {
 				
 				for (int i = 0; i < newStates.size(); i++) {
-					if (BoardStateEvaluator.evaluateBoard(newStates.get(i)) > max) {
-						max = BoardStateEvaluator.evaluateBoard(newStates.get(i));
+					if (BoardStateEvaluator2.evaluateBoard(newStates.get(i)) > max) {
+						max = BoardStateEvaluator2.evaluateBoard(newStates.get(i));
 						bbs = newStates.get(i);
-					} else if (BoardStateEvaluator.evaluateBoard(newStates.get(i)) < min) {
-						min = BoardStateEvaluator.evaluateBoard(newStates.get(i));
+					} else if (BoardStateEvaluator2.evaluateBoard(newStates.get(i)) < min) {
+						min = BoardStateEvaluator2.evaluateBoard(newStates.get(i));
 						wbs = newStates.get(i);
 					}
 				}
@@ -313,7 +313,7 @@ public class COSC322Test extends GamePlayer {
 			if (bs.isLastMoveEqual(move)) {
 				bsh = bs;
 				System.out.println("FOUND BOARD -- NEW BORD IS:");
-				BoardStateEvaluator.printBoard(bs);
+				BoardStateEvaluator2.printBoard(bs);
 				System.out.println("MOVE: " + bsh.lastMove.getQueenPos() + bsh.lastMove.getQueenMove()
 						+ bsh.lastMove.getArrowPos() + " TURN: " + bsh.turn);
 				return;
@@ -326,7 +326,7 @@ public class COSC322Test extends GamePlayer {
 		System.out.println("EXITING CODE");
 		throw new InvalidMoveException("");
 //		bsh = nextStates.get(0);
-//		BoardStateEvaluator.printBoard(bsh);
+//		BoardStateEvaluator2.printBoard(bsh);
 //
 //		System.out.println("MOVE: " + bsh.lastMove.getQueenPos() + bsh.lastMove.getQueenMove()
 //				+ bsh.lastMove.getArrowPos() + " TURN: " + bsh.turn);
@@ -352,10 +352,10 @@ public class COSC322Test extends GamePlayer {
 		if (depth < 1) {
 			// System.out.println("breakpoint 6");
 			if(bs.turn == 1) {
-				bs.value = -BoardStateEvaluator.evaluateBoard(bs);
+				bs.value = -BoardStateEvaluator2.evaluateBoard(bs);
 			}
 			else {
-				bs.value = BoardStateEvaluator.evaluateBoard(bs);
+				bs.value = BoardStateEvaluator2.evaluateBoard(bs);
 			}
 			
 			// System.out.println("breakpoint 7");
