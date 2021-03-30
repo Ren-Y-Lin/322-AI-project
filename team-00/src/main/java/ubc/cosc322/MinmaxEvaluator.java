@@ -8,76 +8,75 @@ public class MinmaxEvaluator {
 	
 	
 	//input: state of the board, the amount of moves to look into the future, whose turn it is
-	public static BoardPackage evaluateBoard(BoardState b, int searchDepth) {
+	public static BoardState evaluateBoard(BoardState b, int searchDepth, int turn,long timestart ,long timelimit) {
 		
 		//System.out.println("evaluating board at dept: " + searchDepth);
-		if(b == null) {
-			return null;
+		if(System.currentTimeMillis()-timestart>timelimit) {
+			b.value = -99999;
 		}
 		
-		if(searchDepth < 1 ) {
-			//System.out.println("breakpoint 6");
-			BoardPackage bp = new BoardPackage(b,BoardStateEvaluator.evaluateBoard(b));
-			//System.out.println("breakpoint 7");
-			return bp;
-			
+		if(searchDepth == 0) {
+			b.value = BoardStateEvaluator2.evaluateBoard(b);
+			return b;
 		}
 		
-		//might be empty array, might be null
-		ArrayList<BoardState> nextMove = MoveGenerator.getMoves(b);
-		//System.out.println("PRINTING MOVES");
-		for (int i = 0; i < nextMove.size(); i++) {
-			//printBoard(nextMove.get(i).board);
+		ArrayList<BoardState> bs = MoveGenerator.getMoves(b); 
+		if(bs.size()<1) {
+			return evaluateBoard(b,0,turn*-1, timestart, timelimit);
 		}
+		b.nextStates = bs;
 		
-		if(nextMove==null || nextMove.size()<1) {
-			return new BoardPackage(null,-9999*b.turn);
-		}
-		
-		double maxVal = -9999;
-		double minVal = 9999;
-		BoardState bbs = null,wbs = null;
-		
-		//do we need this?
-		int maxPos;
-		int minPos;
-		
-		for (int i = 0; i< nextMove.size();i++) {
+		int max = -999;
+		int min = 999;
+		BoardState savedState = b;
 
-			//System.out.println("breakpoint 3 size:"+ nextMove.size());
-			BoardPackage temp = evaluateBoard(nextMove.get(i),searchDepth-1);
+		
+		for(int i = 0 ; i < b.nextStates.size();i++) {
 			
-			if(temp.bs == null) {
-				System.out.println("bs Empty??");
+			evaluateBoard(b.nextStates.get(i),searchDepth-1,turn*-1, timestart, timelimit);
+			if(b.nextStates.get(i).value==-99999) {
+				System.out.println("timeout");
+				break;
 			}
 			
-			if(temp.value>maxVal) {
-				maxVal = temp.value;
-				maxPos = i;
-				bbs = temp.bs;
-			}else if(temp.value<minVal) {
-				
-				minVal = temp.value;
-				minPos = i;
-				wbs = temp.bs;
+			if(turn == 1) {
+				if(b.nextStates.get(i).value > max) {
+					max = b.nextStates.get(i).value;
+					savedState = b.nextStates.get(i);
+				}
+			}else {
+				if(b.nextStates.get(i).value < min) {
+					min = b.nextStates.get(i).value;
+					savedState = b.nextStates.get(i);
+				}
 			}
-
-			
 		}
 		
-		BoardPackage returnObj = new BoardPackage(b.turn == 1?bbs:wbs,b.turn == 1?maxVal:minVal);
-		
-
-		if(returnObj.bs == null) {
-			System.out.println("return board empty");
-		}
-		//System.out.println("breakpoint 5");
 		
 		
-		return returnObj;
+		return savedState;
 		
 		
 	}
+	public static void main(String[] args) {
+		System.out.println("test");
+		
+		BoardState tester = new BoardStateHead();
+		
+		int[][] testBoard = {{0,0,0,2,0,0,2,0,0,0},{3,3,3,3,3,3,3,3,3,3},{2,0,0,0,0,0,0,0,0,2},
+				{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},
+				{1,0,0,0,0,0,0,0,0,1},{0,0,0,0,0,0,0,0,0,0},{0,0,0,1,0,0,1,0,0,0}};
+		tester.board = testBoard;
+		
+		for(int i = 0 ; i < 92;i++) {
+			printBoard(tester.board);
+			tester = evaluateBoard(tester, 1, 1, System.currentTimeMillis(), 18000);
+		}
+		
+		
+		
+	}
+	
 	public static void printBoard(int[][] board) {
 		System.out.println("Board:");
 		for(int i = 0;board.length>i;i++) {
