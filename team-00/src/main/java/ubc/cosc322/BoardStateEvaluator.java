@@ -37,6 +37,9 @@ public class BoardStateEvaluator {
 					resultNeighbors result = getNeighbors(board,x,y);
 					board = result.board;
 					int squares = result.neighbors.size();
+					if(squares == 0) {
+						squares++;
+					}
 					//System.out.println("squares: " + squares);
 					if(result.players[0] >= 0) {
 						//System.out.println("Player1s: "+result.players[0]);
@@ -91,6 +94,7 @@ public class BoardStateEvaluator {
 			return result;
 		}
 		
+		
 		//Checking all 8 directions
 		for(int i = 0; i < 8; i++) {
 			int newX = x, newY = y;
@@ -144,7 +148,9 @@ public class BoardStateEvaluator {
 				//If not 0 or 3 then it's a queen. so mark the found queen in players
 				else if(result.board[newX][newY] != 3) {
 					if(!result.playerCheck[newX][newY]) {
+						//increase queen counter in this area by one
 						result.players[result.board[newX][newY]-1]++;
+						//mark queen in this location as found
 						result.playerCheck[newX][newY] = true;
 					}
 					
@@ -176,9 +182,9 @@ public class BoardStateEvaluator {
 	public static void main(String[] args) {
 		BoardState tester = new BoardStateHead();
 		
-		int[][] testBoard = {{1,0,0,2,0,0,2,0,0,0},{3,3,3,3,3,3,3,3,3,3},{2,0,0,0,3,0,0,0,0,2},
-				{0,0,0,0,3,0,0,0,0,0},{0,0,0,0,3,0,0,0,0,0},{0,0,0,0,3,0,0,0,0,0},{0,0,0,0,3,3,3,3,3,3},
-				{0,0,0,0,0,0,0,0,0,1},{0,0,0,0,0,0,0,0,0,0},{0,0,0,1,0,0,1,0,0,0}};
+		int[][] testBoard = {{0,3,0,2,0,0,0,0,0,0},{1,3,0,3,0,0,0,3,1,0},{3,2,3,0,0,3,0,0,0,3},
+				{3,3,3,0,3,0,0,1,0,0},{0,0,0,3,0,0,0,0,3,0},{0,0,0,3,0,0,0,0,3,0},{0,2,0,0,0,3,0,1,0,3},
+				{3,0,0,0,0,3,3,0,0,3},{0,0,0,0,0,3,3,0,2,0},{0,3,0,3,0,0,0,0,0,3}};
 		
 		
 		tester.board = testBoard;
