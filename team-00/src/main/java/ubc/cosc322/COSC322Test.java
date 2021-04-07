@@ -178,7 +178,7 @@ public class COSC322Test extends GamePlayer {
 			int min = 9999;
 			
 			ArrayList<BoardState> newStates = bsh.returnNewStates();
-			ArrayList<BoardState> newStates2= newStates.get(0).returnNewStates();
+			//ArrayList<BoardState> newStates2= newStates.get(0).returnNewStates();
 			
 			BoardState bbs = newStates.get(0);
 			BoardState wbs = newStates.get(0);
@@ -211,9 +211,12 @@ public class COSC322Test extends GamePlayer {
 			
 			try {
 //				if(newStates.size() > 50 && newStates2.size() > 50) {
-				for(int i = 1 ; i < 3; i++) {
-					tempHead = minimax(bsh, i, i);
+				for(int i = 1 ; i < 4; i++) {
+					BoardState temp1 = minimax(bsh, i, i);
+					System.out.println("///////////////////"+bsh.turn);
 					System.out.println("Depth: "+ i);
+					tempHead = temp1;
+					
 				}
 				
 				
@@ -335,6 +338,9 @@ public class COSC322Test extends GamePlayer {
 		if(counter%100000 == 0) {
 			System.out.println(counter);
 		}
+		if(counter > 6000000 && maxdepth == 2) {
+			throw new InvalidMoveException("lol");
+		}
 		if(counter > 6000000 && maxdepth == 3) {
 			throw new InvalidMoveException("lol");
 		}
@@ -424,4 +430,5 @@ public class COSC322Test extends GamePlayer {
 
 	}
 
+	
 }// end of class
