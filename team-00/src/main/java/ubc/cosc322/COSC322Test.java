@@ -212,7 +212,7 @@ public class COSC322Test extends GamePlayer {
 			try {
 //				if(newStates.size() > 50 && newStates2.size() > 50) {
 				for(int i = 1 ; i < 4; i++) {
-					BoardState temp1 = minimax(bsh, i, i);
+					BoardState temp1 = minimax(bsh.clone(), i, i);
 					System.out.println("///////////////////"+bsh.turn);
 					System.out.println("Depth: "+ i);
 					tempHead = temp1;
@@ -338,13 +338,13 @@ public class COSC322Test extends GamePlayer {
 		if(counter%100000 == 0) {
 			System.out.println(counter);
 		}
-		if(counter > 6000000 && maxdepth == 2) {
+		if(counter > 2000000 && maxdepth == 2) {
 			throw new InvalidMoveException("lol");
 		}
-		if(counter > 6000000 && maxdepth == 3) {
+		if(counter > 2000000 && maxdepth == 3) {
 			throw new InvalidMoveException("lol");
 		}
-		if(counter > 10000000 && maxdepth == 4) {
+		if(counter > 2000000 && maxdepth == 4) {
 			throw new InvalidMoveException("lol");
 		}
 		

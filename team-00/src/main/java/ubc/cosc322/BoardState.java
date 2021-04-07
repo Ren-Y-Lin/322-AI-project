@@ -135,5 +135,10 @@ public class BoardState implements java.io.Serializable {
 		return false;
 	}
 	
+	public BoardState clone() {
+		BoardState nB  = new BoardState(MoveGenerator.copyBoard(board), queenPos1, queenPos2, turn, lastState, lastMove);
+		return nB;
+	}
+	
 
 }
