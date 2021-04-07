@@ -207,11 +207,17 @@ public class COSC322Test extends GamePlayer {
 			
 			counter = 0;
 			Collections.shuffle(newStates);
+			BoardState tempHead = null;
+			
 			try {
 //				if(newStates.size() > 50 && newStates2.size() > 50) {
-					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
-					System.out.println("MINIMAX: 3");
-					bsh = minimax(bsh, 3, 3);
+				for(int i = 1 ; i < 3; i++) {
+					tempHead = minimax(bsh, i, i);
+					System.out.println("Depth: "+ i);
+				}
+				
+				
+					
 //				} 
 //				else {
 //					System.out.println("Our size:" + newStates.size() + " Enemy size:" + newStates2.size());
@@ -222,22 +228,8 @@ public class COSC322Test extends GamePlayer {
 				
 			}catch (InvalidMoveException e) {
 				
-				for (int i = 0; i < newStates.size(); i++) {
-					if (BoardStateEvaluator.evaluateBoard(newStates.get(i)) > max) {
-						max = BoardStateEvaluator.evaluateBoard(newStates.get(i));
-						bbs = newStates.get(i);
-					} else if (BoardStateEvaluator.evaluateBoard(newStates.get(i)) < min) {
-						min = BoardStateEvaluator.evaluateBoard(newStates.get(i));
-						wbs = newStates.get(i);
-					}
-				}
-				BoardState temp;
-				if (player == 1) {
-					temp = bbs;
-				} else {
-					temp = wbs;
-				}
-				bsh = temp;
+
+				bsh = tempHead;
 				
 			}
 				
