@@ -363,6 +363,7 @@ public class COSC322Test extends GamePlayer {
 
 		// might be empty array, might be null
 		ArrayList<BoardState> nextMoves = bs.returnNewStates();
+		Collections.shuffle(nextMoves);
 		if (depth == maxdepth) {
 			if (nextMoves == null || nextMoves.size() < 1) {
 				System.out.println("GAME LOSS");
