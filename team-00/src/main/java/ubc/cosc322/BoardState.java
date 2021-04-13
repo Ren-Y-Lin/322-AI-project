@@ -74,7 +74,7 @@ public class BoardState implements java.io.Serializable {
 			for (BoardState i : nextStates) {
 				BoardState.getStateCounter++;
 				System.out.println(BoardState.getStateCounter +" out of "+ nextStates.size());
-				Simulator.playTillEnd(i);
+				
 				won+=i.timesWon;
 				play++;
 			}

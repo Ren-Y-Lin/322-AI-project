@@ -33,13 +33,22 @@ public class BoardStateEvaluator {
 		for(int x = 0; x < board.length; x++) {
 			for(int y = 0; y < board[x].length; y++) {
 				if(board[x][y] == 0) {
+					//System.out.println("Found 0:");
 					resultNeighbors result = getNeighbors(board,x,y);
 					board = result.board;
 					int squares = result.neighbors.size();
-					if(result.players[0])
-						player1 += squares;
-					if(result.players[1])
-						player2 += squares;
+					if(squares == 0) {
+						squares++;
+					}
+					//System.out.println("squares: " + squares);
+					if(result.players[0] >= 0) {
+						//System.out.println("Player1s: "+result.players[0]);
+						player1 += squares*result.players[0];
+					}
+					if(result.players[1] >= 0) {
+						//System.out.println("Player2s: "+result.players[1]);
+						player2 += squares*result.players[1];
+					}
 					
 				}
 			}
@@ -84,6 +93,7 @@ public class BoardStateEvaluator {
 		if(counter > 100 ) {
 			return result;
 		}
+		
 		
 		//Checking all 8 directions
 		for(int i = 0; i < 8; i++) {
@@ -137,7 +147,13 @@ public class BoardStateEvaluator {
 				}
 				//If not 0 or 3 then it's a queen. so mark the found queen in players
 				else if(result.board[newX][newY] != 3) {
-					result.players[result.board[newX][newY]-1] = true;
+					if(!result.playerCheck[newX][newY]) {
+						//increase queen counter in this area by one
+						result.players[result.board[newX][newY]-1]++;
+						//mark queen in this location as found
+						result.playerCheck[newX][newY] = true;
+					}
+					
 				}
 				//If fire found then do nothing
 				
@@ -151,8 +167,10 @@ public class BoardStateEvaluator {
 	//players = size 2 boolean array where players[0] means that player1 has access to this neighborhood. players[1] for player2
 	private static class resultNeighbors {
 		ArrayList<int[]> neighbors = new ArrayList<int[]>();
-		boolean[] players = new boolean[2];
+		//boolean[] players = new boolean[2];
+		int[] players = new int[2];
 		int[][] board;
+		boolean[][] playerCheck = new boolean[10][10];
 		
 		public resultNeighbors(int[][] board) {
 			this.board = board;
@@ -162,16 +180,17 @@ public class BoardStateEvaluator {
 	
 	
 	public static void main(String[] args) {
-		System.out.println("test");
-		
 		BoardState tester = new BoardStateHead();
 		
-		int[][] testBoard = {{0,0,0,2,0,0,2,0,0,0},{3,3,3,3,3,3,3,3,3,3},{2,0,0,0,0,0,0,0,0,2},
-				{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},
-				{1,0,0,0,0,0,0,0,0,1},{0,0,0,0,0,0,0,0,0,0},{0,0,0,1,0,0,1,0,0,0}};
+		int[][] testBoard = {{0,3,0,2,0,0,0,0,0,0},{1,3,0,3,0,0,0,3,1,0},{3,2,3,0,0,3,0,0,0,3},
+				{3,3,3,0,3,0,0,1,0,0},{0,0,0,3,0,0,0,0,3,0},{0,0,0,3,0,0,0,0,3,0},{0,2,0,0,0,3,0,1,0,3},
+				{3,0,0,0,0,3,3,0,0,3},{0,0,0,0,0,3,3,0,2,0},{0,3,0,3,0,0,0,0,0,3}};
+		
+		
 		tester.board = testBoard;
 		printBoard(testBoard);
-		evaluateBoard(tester);
+		int result = evaluateBoard(tester);
+		System.out.println("Result: " + result);
 	}
 	
 	public static void printBoard(int[][] board) {
